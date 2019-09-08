@@ -1,8 +1,8 @@
 import React from 'react';
-import { fetchMovieById, MovieDetail } from '../scripts/helpers';
 import YoutubeLightbox from './YoutubeLightbox';
 import PlayButton from './PlayButton';
 import '../styles/Header.scss';
+import Movie from '../models/Movie';
 
 interface Props {
     imdbId: string,
@@ -13,7 +13,7 @@ interface Props {
 }
 
 interface State {
-    detail?: MovieDetail,
+    movie?: Movie,
     isTrailerOpen: boolean
 }
 
@@ -21,6 +21,7 @@ export default class Header extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
+            movie: new Movie(),
             isTrailerOpen: false
         }
 
@@ -37,8 +38,8 @@ export default class Header extends React.Component<Props, State> {
     }
 
     getMovieDetail() {
-        fetchMovieById(this.props.imdbId)
-            .then(res => this.setState({detail: res}));
+        Movie.get(this.props.imdbId)
+            .then(movie => this.setState({ movie }))
     }
 
     componentDidMount() {
@@ -68,7 +69,7 @@ export default class Header extends React.Component<Props, State> {
             runtime, 
             rating,
             website
-        } = this.state.detail || {};
+        } = this.state.movie || {};
              
         return (
             <div
