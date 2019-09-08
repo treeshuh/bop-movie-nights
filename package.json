@@ -7,11 +7,16 @@
     "@types/node": "12.7.4",
     "@types/react": "16.9.2",
     "@types/react-dom": "16.9.0",
+    "lightbox-react": "^0.3.7",
     "node-sass": "^4.12.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-player": "^1.12.0",
     "react-scripts": "3.1.1",
-    "typescript": "3.6.2"
+    "typeface-catamaran": "0.0.72",
+    "typeface-roboto-mono": "0.0.75",
+    "typescript": "3.6.2",
+    "unfetch": "^4.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

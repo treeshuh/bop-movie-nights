@@ -1,0 +1,20 @@
+// https://css-tricks.com/snippets/sass/mixin-manage-breakpoints/
+
+$breakpoints: (
+  'sm':  ( min-width:  767px ),
+  'md': ( min-width:  992px ),
+  'lg':  ( min-width: 1200px )
+) !default;
+
+@mixin breakpoint($breakpoint) {
+    @if map-has-key($map: $breakpoints, $key: $breakpoint) {
+        @media #{inspect(map-get($breakpoints, $breakpoint))} {
+            @content;
+        }
+    }
+
+    @else {
+        @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+            + "Available breakpoints are: #{map-keys($breakpoints)}.";
+      }
+}

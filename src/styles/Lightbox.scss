@@ -1,0 +1,23 @@
+@import '~lightbox-react/style.css';
+
+.ril__outer {
+    backdrop-filter: blur(3px);
+}
+
+.ril__toolbar {
+    background-color: transparent;
+}
+
+.ril-image-current.ril__image {
+    position: relative;
+    display: inline-block;
+    top: 50%;
+    left: 50%;
+}
+
+.lightbox-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
