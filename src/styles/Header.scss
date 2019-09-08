@@ -22,6 +22,7 @@
 
     .Header-title {
         text-align: left;
+        text-shadow: 1px 1px 3px #000000a3;
     }
 
     .Header-subtitle {
@@ -58,11 +59,16 @@
         
     }
 
-    .Header-plot {
-        margin-bottom: 5px;
+    .Header-text-container {
+        padding: 10px;
+        background-color: rgba(black, 0.5);
         @include breakpoint('sm') {
             max-width: 50vw;
         }
+    }
+
+    .Header-plot {
+        margin-bottom: 5px;
     }
 
     .Header-website {
@@ -82,6 +88,7 @@
     .Header-genre {
         @include text_utility();
         font-weight: bold;
+        text-shadow: 1px 1px 3px #000000a3;
     }
 
     .Header-rating, .Header-runtime {

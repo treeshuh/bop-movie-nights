@@ -87,15 +87,17 @@ export default class Header extends React.Component<Props, State> {
                         <PlayButton/>
                     </button>
 
-                    {plot && <p className="Header-plot">
-                        {plot}
-                        {website && <a className="Header-website" rel="noopener noreferrer" target="_blank" href={website}>Visit Website ></a>}
-                    </p>}
-                    <div>
-                        {runtime && <div className="Header-runtime">{runtime}</div>}
-                        {rating && <div className="Header-rating">{rating}</div>}
+                    <div className="Header-text-container">
+                        {plot && <p className="Header-plot">
+                            {plot}
+                            {website && <a className="Header-website" rel="noopener noreferrer" target="_blank" href={website}>Visit Website ></a>}
+                        </p>}
+                        <div>
+                            {runtime && <div className="Header-runtime">{runtime}</div>}
+                            {rating && <div className="Header-rating">{rating}</div>}
+                        </div>
+                        <h2 className="Header-subtitle">Upcoming: {screeningDate}</h2>
                     </div>
-                    <h2 className="Header-subtitle">Upcoming: {screeningDate}</h2>
                 </div>
                 <YoutubeLightbox
                     src={trailer}
