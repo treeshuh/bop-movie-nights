@@ -1,0 +1,71 @@
+@import './mixins/typography';
+@import './mixins/breakpoints'; 
+
+.TabbedContent {
+    $secondary-color: #f1c40f;
+    $gray-color: #333;
+    background-color: white;
+    padding-top: 10px;
+
+    @include breakpoint('sm') {
+        padding: 10px 40px;
+    }
+
+    .Tabs {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        max-width: calc(100vw - 60px);
+        white-space: nowrap;
+        overflow-x: auto;
+
+        &::-webkit-scrollbar {
+            height: 3px;
+        }
+         
+        &::-webkit-scrollbar-thumb {
+          background-color: $secondary-color;
+          outline: 1px solid rgb(164, 165, 165);
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        @include breakpoint('sm') {
+            max-width: calc(100vw - 240px);
+        }
+
+        .Tab {
+            display: inline-block;
+            margin-right: 50px;
+            border-top: 2px solid transparent;
+
+            &--active {
+                border-color: $secondary-color;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+        .TabButton {
+            background-color: transparent;
+            border: 0;
+            padding: 10px 10px 30px 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            position: relative;
+            color: $gray-color;
+
+            small {
+                display: block;
+                color: $secondary-color;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    }
+}

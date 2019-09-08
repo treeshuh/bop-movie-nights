@@ -33,6 +33,7 @@
         backdrop-filter: blur(3px);
         padding: 10px;
         display: inline-block;
+        margin-bottom: 50px;
     }
 
     .Header-trailer {
@@ -60,8 +61,6 @@
     }
 
     .Header-text-container {
-        padding: 10px;
-        background-color: rgba(black, 0.5);
         @include breakpoint('sm') {
             max-width: 50vw;
         }

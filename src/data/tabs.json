@@ -1,0 +1,80 @@
+[
+    {
+        "title": "Surreal September",
+        "options": [
+            {
+                "title": "Guardians of the Galaxy Vol. 2",
+                "genre": ["Action", "Adventure", "Comedy", "Sci-Fi"],
+                "plot": "The Guardians struggle to keep together as a team while dealing with their personal family issues, notably Star-Lord's encounter with his father the ambitious celestial being Ego.",
+                "poster": "https://m.media-amazon.com/images/M/MV5BN2MwNjJlODAtMTc1MS00NjkwLTg2NDMtYzFjZmU2MGM1YWUwXkEyXkFqcGdeQXVyMTYzMDM0NTU@._V1_SX300.jpg",
+                "website": "https://marvel.com/guardians",
+                "trailer": "https://www.youtube.com/watch?v=wUn05hdkhjM",
+                "votes": 1
+            },
+            {
+                "title": "Guardians of the Galaxy Vol. 2",
+                "genre": ["Action", "Adventure", "Comedy", "Sci-Fi"],
+                "plot": "The Guardians struggle to keep together as a team while dealing with their personal family issues, notably Star-Lord's encounter with his father the ambitious celestial being Ego.",
+                "poster": "https://m.media-amazon.com/images/M/MV5BN2MwNjJlODAtMTc1MS00NjkwLTg2NDMtYzFjZmU2MGM1YWUwXkEyXkFqcGdeQXVyMTYzMDM0NTU@._V1_SX300.jpg",
+                "website": "https://marvel.com/guardians",
+                "trailer": "https://www.youtube.com/watch?v=wUn05hdkhjM",
+                "votes": 3
+            },
+            {
+                "title": "Guardians of the Galaxy Vol. 2",
+                "genre": ["Action", "Adventure", "Comedy", "Sci-Fi"],
+                "plot": "The Guardians struggle to keep together as a team while dealing with their personal family issues, notably Star-Lord's encounter with his father the ambitious celestial being Ego.",
+                "poster": "https://m.media-amazon.com/images/M/MV5BN2MwNjJlODAtMTc1MS00NjkwLTg2NDMtYzFjZmU2MGM1YWUwXkEyXkFqcGdeQXVyMTYzMDM0NTU@._V1_SX300.jpg",
+                "website": "https://marvel.com/guardians",
+                "trailer": "https://www.youtube.com/watch?v=wUn05hdkhjM",
+                "votes": 2
+            },
+            {
+                "title": "Guardians of the Galaxy Vol. 2",
+                "genre": ["Action", "Adventure", "Comedy", "Sci-Fi"],
+                "plot": "The Guardians struggle to keep together as a team while dealing with their personal family issues, notably Star-Lord's encounter with his father the ambitious celestial being Ego.",
+                "poster": "https://m.media-amazon.com/images/M/MV5BN2MwNjJlODAtMTc1MS00NjkwLTg2NDMtYzFjZmU2MGM1YWUwXkEyXkFqcGdeQXVyMTYzMDM0NTU@._V1_SX300.jpg",
+                "website": "https://marvel.com/guardians",
+                "trailer": "https://www.youtube.com/watch?v=wUn05hdkhjM",
+                "votes": 0
+            },
+            {
+                "title": "Guardians of the Galaxy Vol. 2",
+                "genre": ["Action", "Adventure", "Comedy", "Sci-Fi"],
+                "plot": "The Guardians struggle to keep together as a team while dealing with their personal family issues, notably Star-Lord's encounter with his father the ambitious celestial being Ego.",
+                "poster": "https://m.media-amazon.com/images/M/MV5BN2MwNjJlODAtMTc1MS00NjkwLTg2NDMtYzFjZmU2MGM1YWUwXkEyXkFqcGdeQXVyMTYzMDM0NTU@._V1_SX300.jpg",
+                "website": "https://marvel.com/guardians",
+                "trailer": "https://www.youtube.com/watch?v=wUn05hdkhjM",
+                "votes": 0
+            }
+        ]
+    }, 
+    {
+        "title": "Spooky Scary October",
+        "options": [
+            {
+                "title": "Guardians of the Galaxy Vol. 2",
+                "genre": ["Action", "Adventure", "Comedy", "Sci-Fi"],
+                "plot": "The Guardians struggle to keep together as a team while dealing with their personal family issues, notably Star-Lord's encounter with his father the ambitious celestial being Ego.",
+                "poster": "https://m.media-amazon.com/images/M/MV5BN2MwNjJlODAtMTc1MS00NjkwLTg2NDMtYzFjZmU2MGM1YWUwXkEyXkFqcGdeQXVyMTYzMDM0NTU@._V1_SX300.jpg",
+                "website": "https://marvel.com/guardians",
+                "trailer": "https://www.youtube.com/watch?v=wUn05hdkhjM",
+                "votes": 2
+            },
+            {
+                "title": "Guardians of the Galaxy Vol. 2",
+                "genre": ["Action", "Adventure", "Comedy", "Sci-Fi"],
+                "plot": "The Guardians struggle to keep together as a team while dealing with their personal family issues, notably Star-Lord's encounter with his father the ambitious celestial being Ego.",
+                "poster": "https://m.media-amazon.com/images/M/MV5BN2MwNjJlODAtMTc1MS00NjkwLTg2NDMtYzFjZmU2MGM1YWUwXkEyXkFqcGdeQXVyMTYzMDM0NTU@._V1_SX300.jpg",
+                "website": "https://marvel.com/guardians",
+                "trailer": "https://www.youtube.com/watch?v=wUn05hdkhjM", 
+                "votes": 0
+            }
+        ]
+    },
+    {
+        "title": "<Theme Pending> November",
+        "options": [],
+        "disabled": true
+    }
+]

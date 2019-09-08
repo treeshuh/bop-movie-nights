@@ -1,6 +1,7 @@
 // https://css-tricks.com/snippets/sass/mixin-manage-breakpoints/
 
 $breakpoints: (
+  'xs': (min-width:  479px),
   'sm':  ( min-width:  767px ),
   'md': ( min-width:  992px ),
   'lg':  ( min-width: 1200px )

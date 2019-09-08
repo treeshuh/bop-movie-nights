@@ -6,3 +6,10 @@
         padding: 80px 120px;
     }
 }
+
+.PollArea .TabbedContent{
+    margin-top: 0;
+    @include breakpoint('sm') {
+        margin-top: -150px;
+    }
+}
