@@ -11,7 +11,8 @@
     .PollOption {
         display: inline-block;
         width: 100%;
-        margin-bottom: 20px;
+        position: relative;
+        overflow: hidden;
 
         @include breakpoint('xs') {
             width: calc(50% - 10px);
@@ -21,8 +22,13 @@
         }
 
         @include breakpoint('lg') {
-            width: calc(33% - 30px);
-            margin-left: 20px;
+            width: calc(33.33% - 20px);
+            margin-left: 30px;
+            margin-bottom: 10px;
+
+            &:nth-child(2n) {
+                margin-left: 30px; 
+            }
             &:nth-child(3n+1) {
                 margin-left: 0;
             }
@@ -33,12 +39,21 @@
         }
         
         .PollOption-details {
-            padding: 10px;
-            margin-top: -10px;
-            border: 1px solid #ddd;
-            border-bottom-left-radius: 6px;
-            border-bottom-right-radius: 6px;
-            border-top: 0;
+            padding: 20px;
+            position: absolute;
+            width: calc(100% - 40px);
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(3px);
+            color: white;
+            bottom: 8px;  
+
+        }
+
+        .PollOption-title {
+            letter-spacing: 0.1em;
+            line-height: 1.1;
+            text-transform: uppercase;
+            margin-bottom: 5px;
         }
 
         .PollOption-genres {
@@ -61,8 +76,8 @@
 
         .PollOption-trailer {
             background: transparent;
-            border: 1px solid black;
-            color: black;
+            border: 1px solid white;
+            color: white;
             padding: 5px 10px;
             border-radius: 20px;
             font-size: 80%;
@@ -71,7 +86,7 @@
                 margin-left: 1em;
                 width: 1em;
                 height: 1em;
-                border-color: black;
+                border-color: white;
             }
         }
 

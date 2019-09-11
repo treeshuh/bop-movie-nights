@@ -79,7 +79,7 @@ export default class Poll extends React.Component<Props, State> {
                         </div>
                     </li>)
                 })}
-                {activeTrailer && <YoutubeLightbox
+                {activeTrailer !== undefined && <YoutubeLightbox
                     src={options[activeTrailer].trailer}
                     isOpen={isTrailerOpen}
                     onClose={this.closeTrailer}
