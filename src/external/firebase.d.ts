@@ -3,6 +3,7 @@ export type App = {
 }
 
 export type Movie = {
+    id: string;
     trailerUrl: string;
 }
 
@@ -13,6 +14,10 @@ export type UpcomingMovie = {
 };
 
 export type Poll = {
+    options: PollOption[];
+};
+
+export type PollOption = {
     imdbId: string;
     count: number;
-};
+}

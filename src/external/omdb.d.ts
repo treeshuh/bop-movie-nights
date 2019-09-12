@@ -1,6 +1,7 @@
 export type Movie = {
+    imdbID: string;
     Title: string;
-    Genre: string[];
+    Genre: string;
     Plot: string;
     Poster: string;
     Rated: string;

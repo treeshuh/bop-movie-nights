@@ -1,4 +1,5 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 import { collectionData, docData } from 'rxfire/firestore';
 import { Movie, Poll, UpcomingMovie } from './firebase.d';
 
@@ -14,8 +15,8 @@ const app = firebase.initializeApp({
 const db = app.firestore();
 
 export const upcomingMovie$ = docData<UpcomingMovie>(db.doc('app/upcomingMovie'));
-export const movies$ = collectionData<Movie>(db.collection('movies'));
-export const poll$ = collectionData<Poll>(db.collection('polls'));
+export const movies$ = collectionData<Movie>(db.collection('movies'), 'id');
+export const polls$ = collectionData<Poll>(db.collection('polls'), 'id');
 
 // const log = (x: any) => console.log(x);
 // upcomingMovie$.subscribe(log);
