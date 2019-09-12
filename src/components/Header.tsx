@@ -2,7 +2,18 @@ import React from 'react';
 import YoutubeLightbox from './YoutubeLightbox';
 import PlayButton from './PlayButton';
 import '../styles/Header.scss';
-import Movie from '../models/Movie';
+
+const upcomingMovie = {
+    "title": "Guardians of the Galaxy Vol. 2",
+    "genre": ["Action", "Adventure", "Comedy", "Sci-Fi"],
+    "plot": "The Guardians struggle to keep together as a team while dealing with their personal family issues, notably Star-Lord's encounter with his father the ambitious celestial being Ego.",
+    "poster": "https://m.media-amazon.com/images/M/MV5BN2MwNjJlODAtMTc1MS00NjkwLTg2NDMtYzFjZmU2MGM1YWUwXkEyXkFqcGdeQXVyMTYzMDM0NTU@._V1_SX300.jpg",
+    "website": "https://marvel.com/guardians",
+    "trailer": "https://www.youtube.com/watch?v=wUn05hdkhjM",
+    "votes": 1,
+    "runtime": "105 minutes",
+    "rating": "PG-13"
+}
 
 interface Props {
     imdbId: string,
@@ -13,7 +24,6 @@ interface Props {
 }
 
 interface State {
-    movie?: Movie,
     isTrailerOpen: boolean
 }
 
@@ -21,7 +31,6 @@ export default class Header extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            movie: new Movie(),
             isTrailerOpen: false
         }
 
@@ -35,21 +44,6 @@ export default class Header extends React.Component<Props, State> {
 
     closeTrailer() {
         this.setState({isTrailerOpen: false});
-    }
-
-    getMovieDetail() {
-        Movie.get(this.props.imdbId)
-            .then(movie => this.setState({ movie }))
-    }
-
-    componentDidMount() {
-        this.getMovieDetail();
-    }
-
-    componentDidUpdate(prevProps: Props) {
-        if (prevProps.imdbId !== this.props.imdbId) {
-            this.getMovieDetail();
-        }
     }
 
     render() {
@@ -69,7 +63,7 @@ export default class Header extends React.Component<Props, State> {
             runtime, 
             rating,
             website
-        } = this.state.movie || {};
+        } = upcomingMovie || {};
              
         return (
             <div

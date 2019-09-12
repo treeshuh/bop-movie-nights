@@ -44,4 +44,9 @@ export default class Poll {
         const pollRef = await firebase.firestore().collection('polls').add({});
         return new Poll(pollRef.id);
     }
+
+    static async fetchAll(): Promise<Poll[]> {
+        const snapshot = await firebase.firestore().collection('polls').get();
+        return snapshot.docs.map(doc => new Poll(doc.ref.id));
+    }
 }

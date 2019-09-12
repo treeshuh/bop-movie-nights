@@ -7,7 +7,7 @@ import Poll from './components/Poll';
 // temp data
 import UpcomingMovie from './data/upcoming.json';
 import TabsData from './data/tabs.json';
-import Debug from './models/Debug';
+import Debug from './components/Debug';
 
 const App: React.FC = () => {
     const tabs = TabsData.map(tab => ({
@@ -16,11 +16,11 @@ const App: React.FC = () => {
     }));
     return (
         <div className="App">
+            <Debug />
             <Header {...UpcomingMovie}/>
             <div className="PollArea Container">
                 <TabbedContent initialTab={0} tabs={tabs} />
             </div>
-            <Debug />
         </div>
     );
 }
