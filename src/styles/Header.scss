@@ -1,24 +1,18 @@
-@import './mixins/typography';
-@import './mixins/breakpoints';
+@import './_util/typography';
+@import './_util/breakpoints';
 
 .Header {
     $secondary-color: #f1c40f;
     $dark-white: #ecf0f1;
-    $top-spacer-mobile: 50px;
-    $top-spacer: 100px;
     $middle-spacer: 50px;
 
     color: white;
-    min-height: calc(50vw - #{$top-spacer});
+    min-height: 40vw;
     max-height: 1500px;
     background-size: cover;
     background-position: center bottom;
-
-    padding-top: $top-spacer-mobile;
-
-    @include breakpoint('sm') {
-        padding-top: $top-spacer;
-    }
+    display: flex;
+    align-items: center;
 
     .Header-title {
         text-align: left;
@@ -26,14 +20,13 @@
     }
 
     .Header-subtitle {
-        margin-top: $middle-spacer;
         @include text_mono();
         color: black;
         background-color: $secondary-color;
-        backdrop-filter: blur(3px);
+        border-radius: 2px;
         padding: 10px;
         display: inline-block;
-        margin-bottom: 50px;
+        margin-top: $middle-spacer;
     }
 
     .Header-trailer {
@@ -42,7 +35,7 @@
         background-color: white;
         color: black;
         border: 2px solid white;
-        border-radius: 50px;
+        border-radius: 2px;
         padding: 8px 18px;
         margin-top: 15px;
         margin-bottom: $middle-spacer;

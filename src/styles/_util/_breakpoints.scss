@@ -1,10 +1,11 @@
 // https://css-tricks.com/snippets/sass/mixin-manage-breakpoints/
 
 $breakpoints: (
-  'xs': (min-width:  479px),
-  'sm':  ( min-width:  767px ),
+  'xs': (min-width:  480px),
+  'sm':  ( min-width:  768px ),
   'md': ( min-width:  992px ),
-  'lg':  ( min-width: 1200px )
+  'lg':  ( min-width: 1200px ),
+  'xl': ( min-width: 1600px ),
 ) !default;
 
 @mixin breakpoint($breakpoint) {

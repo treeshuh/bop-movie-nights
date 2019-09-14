@@ -1,4 +1,5 @@
-@import './mixins/breakpoints';
+@import './_util/breakpoints';
+@import './_util/color';
 
 .Container {
     padding: 20px 30px;
@@ -7,9 +8,10 @@
     }
 }
 
-.PollArea .TabbedContent{
-    margin-top: 0;
+.PollArea.Container {
+    background-color: $color-darkest-gray;
+    border-top: 5px solid $color-light-gray;
     @include breakpoint('sm') {
-        margin-top: -150px;
+        padding: 30px 120px;
     }
 }

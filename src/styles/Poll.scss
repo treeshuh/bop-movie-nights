@@ -1,5 +1,6 @@
-@import './mixins/breakpoints';
-@import './mixins/typography';
+@import './_util/breakpoints';
+@import './_util/typography';
+@import './_util/color';
 
 .Poll {
     $secondary-color: #f1c40f;
@@ -13,6 +14,7 @@
         width: 100%;
         position: relative;
         overflow: hidden;
+        border-radius: 2px;
 
         @include breakpoint('xs') {
             width: calc(50% - 10px);
@@ -21,7 +23,7 @@
             }
         }
 
-        @include breakpoint('lg') {
+        @include breakpoint('sm') {
             width: calc(33.33% - 20px);
             margin-left: 30px;
             margin-bottom: 10px;
@@ -34,25 +36,37 @@
             }
         }
 
+        @include breakpoint('lg') {
+            width: calc(25% - 30px);
+            margin-left: 40px;
+            margin-bottom: 20px;
+
+            &:nth-child(2n) {
+                margin-left: 40px; 
+            }
+            &:nth-child(3n+1) {
+                margin-left: 40px;
+            }
+            &:nth-child(4n+1) {
+                margin-left: 0;
+            }
+        }
+
         .PollOption-image {
             width: 100%;
         }
         
         .PollOption-details {
-            padding: 20px;
-            position: absolute;
-            width: calc(100% - 40px);
-            background-color: rgba(0,0,0,0.5);
-            backdrop-filter: blur(3px);
-            color: white;
-            bottom: 8px;  
-
+            padding: 10px;
+            background-color: white;
+            color: $color-dark-gray;
+            margin-top: -9px;
         }
 
         .PollOption-title {
-            letter-spacing: 0.1em;
+            // letter-spacing: 0.1em;
             line-height: 1.1;
-            text-transform: uppercase;
+            // text-transform: uppercase;
             margin-bottom: 5px;
         }
 

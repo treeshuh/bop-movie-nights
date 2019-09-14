@@ -1,5 +1,6 @@
 @import 'typeface-catamaran';
-@import './mixins/typography';
+@import './_util/typography';
+@import './_util/color';
 
 body {
     margin: 0;
@@ -16,6 +17,7 @@ code {
 html, body {
     padding: 0;
     margin: 0;
+    background-color: $color-darkest-gray;
 
     h1, h2, h3, h4, h5, p {
         margin: 0;

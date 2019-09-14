@@ -16,7 +16,7 @@ const App: React.FC = () => {
     }));
     return (
         <div className="App">
-            <Debug />
+            {/* <Debug /> */}   
             <Header {...UpcomingMovie}/>
             <div className="PollArea Container">
                 <TabbedContent initialTab={0} tabs={tabs} />

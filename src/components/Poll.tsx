@@ -64,7 +64,7 @@ export default class Poll extends React.Component<Props, State> {
                         <img alt={`${opt.title} Movie Poster`} className="PollOption-image" src={opt.poster}/>
                         <div className="PollOption-details">
                             <h3 className="PollOption-title">{opt.title}</h3>
-                            <ul className="PollOption-genres">
+{/*                             <ul className="PollOption-genres">
                                 {opt.genre.map((g: string) => (
                                     <li key={g} className="PollOption-genre">{g}</li>
                                 ))}
@@ -75,7 +75,7 @@ export default class Poll extends React.Component<Props, State> {
                                     <PlayButton/>
                                 </button>
                                 <button className="PollOption-vote">&#x2605; ({opt.votes})</button>
-                            </div>
+                            </div> */}
                         </div>
                     </li>)
                 })}
