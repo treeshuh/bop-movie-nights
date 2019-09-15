@@ -63,12 +63,8 @@ export default () => {
                         {runtime && <div className="Header-runtime">{runtime}</div>}
                         {rated && <div className="Header-rating">{rated}</div>}
                     </div>
-                    <h2 className="Header-subtitle">
-                        Upcoming:
-                        &nbsp;
-                        {moment(watchDate.seconds * 1000).format('dddd, MMMM Do')}
-                        &nbsp;
-                        ({moment(watchDate.seconds * 1000).fromNow()})
+                    <h2 className="Header-subtitle" title={moment(watchDate.seconds * 1000).fromNow()}>
+                        Upcoming: {moment(watchDate.seconds * 1000).format('dddd, MMMM Do')}
                     </h2>
                 </div>
             </div>
