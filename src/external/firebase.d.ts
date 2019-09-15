@@ -1,3 +1,5 @@
+import { ID } from "@datorama/akita";
+
 export type App = {
     upcomingMovie: UpcomingMovie;
 }
@@ -14,7 +16,11 @@ export type UpcomingMovie = {
 };
 
 export type Poll = {
+    id: ID;
+    title: string;
     options: PollOption[];
+    archived: boolean;
+    order: number;
 };
 
 export type PollOption = {

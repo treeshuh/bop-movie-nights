@@ -1,38 +1,50 @@
 import { MoviesStore, moviesStore } from "./movies.store";
 import { movies$ } from "../../external/firebase";
-import { switchMap, merge, map, mergeAll, tap, mergeMap } from 'rxjs/operators';
-import { from } from "rxjs";
-import { Movie } from "./movie.model";
+import { switchMap, scan } from 'rxjs/operators';
+import { from, merge } from "rxjs";
+import { Movie as OMDBMovie } from '../../external/omdb.d';
+import { Movie as CustomMovie } from '../../external/firebase.d';
 import { fetchMovie } from "../../external/omdb";
+
+type MoviePayload = {
+    omdb: OMDBMovie;
+    custom: CustomMovie;
+}
 
 export class MoviesService {
     constructor(private moviesStore: MoviesStore) { }
 
-    load() {
-        // TODO
+    // Subscribe to custom movies, and get their associated OMDB data
+    load(): void {
         movies$.pipe(
-            mergeMap(from),
-            mergeMap(movie => from(fetchMovie(movie.id))),
-            // tap(x => console.log(x)),
-            // map(from),
-            tap(x => console.log(x))
-            // mergeAll(),
-            // tap(x => console.log(x)),
-            // switchMap(mergeAll)
+            // We only want the last emitted array of movies
+            // Map each movie into a promise for a 
+            switchMap(movies => {
+                const customMovies$ = movies.map(custom => {
+                    return from(fetchMovie(custom.id)).pipe(
+                        scan((_, omdb: OMDBMovie): MoviePayload => ({
+                            custom,
+                            omdb,
+                        } as MoviePayload), {} as MoviePayload),
+                    )
+                });
+                return merge(...customMovies$);
+            }),
         ).subscribe(movie => {
-            this.moviesStore.upsert(movie.imdbID, {
-                id: movie.imdbID,
-                genre: movie.Genre
+            this.moviesStore.upsert(movie.omdb.imdbID, {
+                id: movie.omdb.imdbID,
+                genre: movie.omdb.Genre
                     .split(',')
                     .map((genre: string) => genre.trim()),
-                plot: movie.Plot,
-                poster: movie.Poster,
-                rated: movie.Rated,
-                runtime: movie.Runtime,
-                title: movie.Title,
-                website: movie.Website,
-                year: movie.Year,
-            })
+                plot: movie.omdb.Plot,
+                poster: movie.omdb.Poster,
+                rated: movie.omdb.Rated,
+                runtime: movie.omdb.Runtime,
+                title: movie.omdb.Title,
+                website: movie.omdb.Website,
+                year: movie.omdb.Year,
+                trailerUrl: movie.custom.trailerUrl,
+            });
         });
     }
 }
