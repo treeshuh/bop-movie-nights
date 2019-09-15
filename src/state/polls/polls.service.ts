@@ -2,12 +2,13 @@ import { ID } from "@datorama/akita";
 import { PollsStore, pollsStore } from "./polls.store";
 import { PollOption, Poll } from "./poll.model";
 import { polls$, addVote } from "../../external/firebase";
+import { Subscription } from "rxjs";
 
 export class PollsService {
     constructor(private pollsStore: PollsStore) {}
 
-    load(): void {
-        polls$.subscribe(polls => {
+    load(): Subscription {
+        return polls$.subscribe(polls => {
             this.pollsStore.set(polls.map((poll): Poll => ({
                 id: poll.id,
                 title: poll.title,
@@ -18,14 +19,6 @@ export class PollsService {
                 archived: poll.archived,
                 order: poll.order
             })));
-
-            // const activePoll = R.pipe(
-            //     R.sortBy(R.prop('order')),
-            //     R.filter(R.propEq('archived', false)),
-            //     R.head,
-            // )(polls);
-
-            // this.setActive((activePoll as Poll).id);
         });
     }
 

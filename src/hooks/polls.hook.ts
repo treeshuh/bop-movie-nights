@@ -4,6 +4,7 @@ import { pollsService } from '../state/polls/polls.service';
 import { pollsQuery } from '../state/polls/polls.query';
 import { Poll, PollOption } from '../state/polls/poll.model';
 import { ID } from '@datorama/akita';
+import { first } from 'rxjs/operators';
 
 interface PollsState {
     polls: Poll[];
@@ -43,6 +44,15 @@ export function usePollsFacade(): [PollsState, Function, Function, Function, Fun
             onEmit<Poll>(pollsQuery.active$, poll => setState(state => ({ ...state, activePoll: poll }))),
             onEmit<PollOption | null>(pollsQuery.activeOption$, pollOption => setState(state => ({ ...state, activePollOption: pollOption }))),
         ];
+
+        // Set first available poll to be active
+        subscriptions.push(
+            pollsQuery.polls$.pipe(
+                first(polls => polls.length > 0)
+            ).subscribe((polls) => {
+                setActive(polls[0].id);
+            })
+        )
 
         pollsService.load();
         return () => { subscriptions.forEach(subscription => subscription.unsubscribe()); }

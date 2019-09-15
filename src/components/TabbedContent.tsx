@@ -1,67 +1,35 @@
-import React, { ReactFragment } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import '../styles/Tabs.scss';
+import { usePollsFacade } from '../hooks/polls.hook';
 
-interface Tab {
-    title: string,
-    options: object[]
-    disabled?: boolean,
-    content?: ReactFragment
-}
+export default () => {
+    const [
+        pollsState,
+        setActivePoll,
+    ] = usePollsFacade();
 
-interface Props {
-    tabs: Tab[],
-    initialTab: number
-}
-
-interface State {
-    activeTab: number
-}
-
-export default class TabbedContent extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            activeTab: props.initialTab
-        };
-        this.setActiveTab = this.setActiveTab.bind(this);
+    if (pollsState.activePoll === null) {
+        return <h1>Loading...</h1>;
     }
 
-    setActiveTab = (index: number) => () => {
-        this.setState({activeTab: index});
-    }
-
-    createTab(tab: Tab, index: number) {
-        return (<button className="TabButton" onClick={this.setActiveTab(index)}>
-            {tab.title}
-            {index === this.props.initialTab && <small>Current</small>}
-        </button>)
-    }
-
-    render() {
-        const {
-            tabs
-        } = this.props;
-        const {
-            activeTab
-        } = this.state; 
-
-        return (
-            <div className="TabbedContent">
-                <ul className="Tabs">
-                    {tabs.map((tab, index) => {
-                        return (<li 
-                            className={classNames('Tab', {'Tab--active': index === activeTab})} 
-                            key={`tab-${tab.title}`}
+    return (
+        <div className="TabbedContent">
+            <ul className="Tabs">
+                {pollsState.polls.map((poll, index) => {
+                    return (
+                        <li
+                            className={classNames('Tab', { 'Tab--active': poll === pollsState.activePoll })}
+                            key={`tab-${poll.title}`}
                         >
-                            {this.createTab(tab, index)}
-                        </li>)
-                    })}
-                </ul>
-                <div className="Content">
-                    {tabs[activeTab].content}
-                </div>
-            </div>
-        );
-    }
-}
+                            <button className="TabButton" onClick={() => setActivePoll(poll.id)}>
+                                {poll.title}
+                                {poll === pollsState.polls[0] && <small>Current</small>}
+                            </button>
+                        </li>
+                    )
+                })}
+            </ul>
+        </div>
+    );
+};

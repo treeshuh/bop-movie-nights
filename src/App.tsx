@@ -10,16 +10,12 @@ import TabsData from './data/tabs.json';
 import Debug from './components/Debug';
 
 const App: React.FC = () => {
-    const tabs = TabsData.map(tab => ({
-        ...tab,
-        content: <Poll options={tab.options} title={tab.title} disabled={tab.disabled}/>
-    }));
     return (
         <div className="App">
-            <Debug />
+            {/* <Debug /> */}
             <Header />
             <div className="PollArea Container">
-                <TabbedContent initialTab={0} tabs={tabs} />
+                <TabbedContent />
             </div>
         </div>
     );

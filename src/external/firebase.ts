@@ -18,7 +18,7 @@ export const upcomingMovie$ = docData<UpcomingMovie>(db.doc('app/upcomingMovie')
 export const movies$ = collectionData<Movie>(db.collection('movies'), 'id');
 export const polls$ = collectionData<Poll>(db.collection('polls'), 'id');
 
-export async function addVote(id: string, imdbId: string): Promise <void> {
+export async function addVote(id: string, imdbId: string): Promise<void> {
     const pollRef = await firebase.firestore().collection('polls').doc(id);
     return firebase.firestore().runTransaction(async (transaction: firebase.firestore.Transaction) => {
         const pollDoc = await transaction.get(pollRef);
