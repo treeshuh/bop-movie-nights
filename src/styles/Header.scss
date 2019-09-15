@@ -1,6 +1,12 @@
 @import './_util/typography';
 @import './_util/breakpoints';
 
+@keyframes pulse {
+    to {
+        transform: scale(1.1) translate(-20px, -10px);
+    }
+}
+
 .Header {
     $secondary-color: #f1c40f;
     $dark-white: #ecf0f1;
@@ -9,10 +15,23 @@
     color: white;
     min-height: 40vw;
     max-height: 1500px;
-    background-size: cover;
-    background-position: center bottom;
     display: flex;
     align-items: center;
+    position: relative;
+    overflow: hidden;
+
+    .Header-background {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-size: cover;
+        background-position: center bottom;
+        z-index: -1;
+        filter: brightness(0.6);
+        animation: pulse 25s infinite alternate linear;
+    }
 
     .Header-title {
         text-align: left;

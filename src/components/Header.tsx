@@ -38,10 +38,8 @@ export default () => {
      } = upcomingMovie || {};
 
     return (
-        <div
-            className="Header"
-            style={{ backgroundImage: `url(${wallpaperUrl})` }}
-        >
+        <div className="Header">
+            <div className="Header-background" style={{ backgroundImage: `url(${wallpaperUrl})` }}></div>
             <div className="Container">
                 <h1 className="Header-title">{title}</h1>
                 <div className="Header-genres">
