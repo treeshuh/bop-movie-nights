@@ -17,9 +17,11 @@ function onEmit<T>(source$: Observable<T>, nextFn:(value: T) => void): Subscript
 /**
  * View Model for Poll view components
  */
-export function usePollsFacade(): [PollsState, Function] {
+export function usePollsFacade(): [PollsState, Function, Function] {
     const [state, setState] = useState<PollsState>({ polls: [], activePoll: null });
     const setActive = (id: ID) => pollsService.setActive(id);
+    //@ts-ignore
+    const addPollVote = (id: ID, optionId: string) => console.log(id) || pollsService.addVote(id, optionId);
 
     /**
      * Manage subscriptions with auto-cleanup
@@ -34,5 +36,5 @@ export function usePollsFacade(): [PollsState, Function] {
         return () => { subscriptions.forEach(subscription => subscription.unsubscribe()); }
     }, []);
 
-    return [state, setActive];
+    return [state, setActive, addPollVote];
 }

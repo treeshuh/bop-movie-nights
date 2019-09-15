@@ -18,7 +18,7 @@ function onEmit<T>(source$: Observable<T>, nextFn:(value: T) => void): Subscript
  */
 export function useUpcomingMovieFacade(): [UpcomingMovie | null] {
     const [state, setState] = useState<UpcomingMovieState>({ upcomingMovie: null });
-    const [_, getMovieById] = useMoviesFacade();
+    const [, getMovieById] = useMoviesFacade();
 
     /**
      * Manage subscriptions with auto-cleanup
