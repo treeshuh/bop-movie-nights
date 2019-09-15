@@ -2,5 +2,5 @@ import { Movie } from './movie.model';
 
 export interface UpcomingMovie extends Movie {
     wallpaperUrl: string;
-    watchDate: Date;
+    watchDate: any;
 }
