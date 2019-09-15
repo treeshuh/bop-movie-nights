@@ -21,6 +21,6 @@ export const polls$ = collectionData<Poll>(db.collection('polls'), 'id');
 // const log = (x: any) => console.log(x);
 // upcomingMovie$.subscribe(log);
 // movies$.subscribe(log);
-// poll$.subscribe(log);
+// polls$.subscribe(log);
 
 export default firebase;

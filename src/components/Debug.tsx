@@ -1,17 +1,21 @@
 import React from 'react';
 import { usePollsFacade } from '../hooks/polls.hook';
 import { useMoviesFacade } from '../hooks/movies.hook';
-// import '../external/omdb';
-// import '../external/firebase';
-// import '../state/movies/movies.service';
+import { useUpcomingMovieFacade } from '../hooks/upcoming-movie.hook';
 
 export default () => {
-    const [pollsState] = usePollsFacade();
+    const [pollsState, setActivePoll] = usePollsFacade();
     const [moviesState] = useMoviesFacade();
+    const [upcomingMovie] = useUpcomingMovieFacade();
 
     return (
-        <>
+        <div style={{background: 'white'}}>
+            <div className="UpcomingMovieDebug">
+                <h1>Upcoming Movie</h1>
+                {JSON.stringify(upcomingMovie, null, 2)}
+            </div>
             <div className="MoviesDebug">
+                <h1>All Movies</h1>
                 {moviesState.movies.map(movie => (
                     <div key={movie.id}>
                         <h5>Movie ID: {movie.id}</h5>
@@ -22,6 +26,7 @@ export default () => {
                 ))}
             </div>
             <div className="PollsDebug">
+                <h1>Polls</h1>
                 <button onClick={() => { }}>Create Poll</button>
                 <button onClick={() => { }} disabled={true}>Add option</button>
                 <button onClick={() => { }} disabled={true}>Add vote</button>
@@ -36,6 +41,6 @@ export default () => {
                     </div>
                 ))}
             </div>
-        </>
+        </div>
     );
 };

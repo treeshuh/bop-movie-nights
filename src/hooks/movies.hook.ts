@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Observable, Subscription } from 'rxjs';
 import { Movie } from '../state/movies/movie.model';
 import { moviesService } from '../state/movies/movies.service';
@@ -15,7 +15,7 @@ function onEmit<T>(source$: Observable<T>, nextFn:(value: T) => void): Subscript
 /**
  * View Model for Movie view components
  */
-export function useMoviesFacade(): [MoviesState] {
+export function useMoviesFacade(): [MoviesState, Function] {
     const [state, setState] = useState<MoviesState>({ movies: [] });
 
     /**
@@ -27,5 +27,13 @@ export function useMoviesFacade(): [MoviesState] {
         return () => subscription.unsubscribe();
     }, []);
 
-    return [state];
+    /**
+     * Memoized helper for getting movie by ID
+     */
+    const getMovieById = useCallback(
+        (id: string) => state.movies.find(movie => movie.id === id),
+        [state.movies]
+    );
+
+    return [state, getMovieById];
 }

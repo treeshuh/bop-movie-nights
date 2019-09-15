@@ -3,6 +3,7 @@ import { Observable, Subscription } from 'rxjs';
 import { pollsService } from '../state/polls/polls.service';
 import { pollsQuery } from '../state/polls/polls.query';
 import { Poll } from '../state/polls/poll.model';
+import { ID } from '@datorama/akita';
 
 interface PollsState {
     polls: Poll[];
@@ -16,8 +17,9 @@ function onEmit<T>(source$: Observable<T>, nextFn:(value: T) => void): Subscript
 /**
  * View Model for Poll view components
  */
-export function usePollsFacade(): [PollsState] {
+export function usePollsFacade(): [PollsState, Function] {
     const [state, setState] = useState<PollsState>({ polls: [], activePoll: null });
+    const setActive = (id: ID) => pollsService.setActive(id);
 
     /**
      * Manage subscriptions with auto-cleanup
@@ -32,5 +34,5 @@ export function usePollsFacade(): [PollsState] {
         return () => { subscriptions.forEach(subscription => subscription.unsubscribe()); }
     }, []);
 
-    return [state];
+    return [state, setActive];
 }
