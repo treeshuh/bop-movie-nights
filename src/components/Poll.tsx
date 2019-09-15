@@ -1,6 +1,7 @@
 import React from 'react';
 import PlayButton from './PlayButton';
 import YoutubeLightbox from './YoutubeLightbox';
+import Carousel from './Carousel';
 import '../styles/Poll.scss';
 
 interface Option {
@@ -59,12 +60,20 @@ export default class Poll extends React.Component<Props, State> {
 
         return (
             <ul className="Poll">
-                {options.map((opt, index) => {
+               <Carousel imgs={options.map(o => ({src: o.poster, alt: o.title}))} />
+            </ul>
+        );
+    }
+}
+
+/* 
+
+ {options.map((opt, index) => {
                     return (<li className="PollOption" key={`pollOption-${opt.title}-${index}`}>
                         <img alt={`${opt.title} Movie Poster`} className="PollOption-image" src={opt.poster}/>
                         <div className="PollOption-details">
                             <h3 className="PollOption-title">{opt.title}</h3>
-{/*                             <ul className="PollOption-genres">
+                             <ul className="PollOption-genres">
                                 {opt.genre.map((g: string) => (
                                     <li key={g} className="PollOption-genre">{g}</li>
                                 ))}
@@ -75,16 +84,13 @@ export default class Poll extends React.Component<Props, State> {
                                     <PlayButton/>
                                 </button>
                                 <button className="PollOption-vote">&#x2605; ({opt.votes})</button>
-                            </div> */}
-                        </div>
-                    </li>)
-                })}
-                {activeTrailer !== undefined && <YoutubeLightbox
-                    src={options[activeTrailer].trailer}
-                    isOpen={isTrailerOpen}
-                    onClose={this.closeTrailer}
-                />}
-            </ul>
-        );
-    }
-}
+                            </div>
+                            </div>
+                            </li>)
+                        })}
+                        {activeTrailer !== undefined && <YoutubeLightbox
+                            src={options[activeTrailer].trailer}
+                            isOpen={isTrailerOpen}
+                            onClose={this.closeTrailer}
+                        />}
+*/

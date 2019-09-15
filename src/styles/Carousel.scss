@@ -1,0 +1,67 @@
+@import './_util/color';
+
+.Carousel {
+    $transition: transform 500ms ease;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+
+    &::before, &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 20%;
+        z-index: 2;
+        pointer-events: none;
+    }
+    &::before {
+        left: 0;
+        background: linear-gradient(to right, rgba($color-darkest-gray, 1) 0%,rgba(0,0,0,0) 100%);
+    }
+    &::after {
+        right: 0;
+        background: linear-gradient(to left, rgba($color-darkest-gray, 1) 0%,rgba(0,0,0,0) 100%);
+    }
+    
+    .CarouselSlider {
+        transition: $transition;
+    }
+
+    .CarouselImageContainer {
+        display: inline-block;
+        position: relative;
+        perspective: 1000px;
+        transform-style: preserve-3d;
+        transition: $transition;
+        z-index: 1;
+
+        &--active {
+            z-index: 2;
+        }
+
+        &--before {
+            transform: translateX(12.5%);
+        }
+
+        &--after {
+            transform: translateX(-12.5%);
+        }
+
+        &:hover {
+            cursor: pointer;
+            // transform: scale(1.02);
+        }
+    }
+
+    .CarouselImage {
+        pointer-events: all;
+        transition: $transition;
+        $image-transform: scale(0.9) translateZ(-200px);
+        transform: $image-transform;
+
+        &--active {
+            transform: scale(1) translate(0);
+        }
+    }
+}

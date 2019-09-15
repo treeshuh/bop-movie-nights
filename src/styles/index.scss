@@ -24,6 +24,10 @@ html, body {
     }
 }
 
+*, *:after, *:before {
+    box-sizing: border-box;
+}
+
 a {
     font-weight: bold;
 }
