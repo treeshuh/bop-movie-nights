@@ -1,14 +1,24 @@
 import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import '../styles/Carousel.scss';
 
-function Carousel({
+interface Image {
+    src: string,
+    alt: string
+}
+
+interface CarouselProps {
+    imgs: Image[],
+    active?: number 
+}
+
+const Carousel: React.FC<CarouselProps> = ({
     imgs,
     active,
-}) {
+}) => {
+
     const [activeIndex, setActive] = useState(active || 0);
-    const rootEl = useRef(null);
+    const rootEl = useRef<HTMLDivElement>(null);
 
     const handleImageClick = useCallback((event) => {
         const {
@@ -40,12 +50,13 @@ function Carousel({
 
     /* Handles responsive and transforms */
     const handleResize = useCallback(() => {
-        if (!rootEl.current) {
+        let thisRoot = rootEl.current;
+        if (thisRoot === null) {
             return;
         }
-        const slideEl = rootEl.current.querySelector('.CarouselSlider');
-        const firstEl = rootEl.current.querySelector('.Carousel .CarouselImageContainer');
-        const activeEl = rootEl.current.querySelector('.CarouselImageContainer--active');
+        const slideEl: HTMLElement | null = thisRoot.querySelector('.CarouselSlider');
+        const firstEl: HTMLElement | null = thisRoot.querySelector('.Carousel .CarouselImageContainer');
+        const activeEl: HTMLElement | null = thisRoot.querySelector('.CarouselImageContainer--active');
         if (slideEl && firstEl && activeEl) {
             const firstLeft = firstEl.offsetLeft;
             const activeLeft = activeEl.offsetLeft;
@@ -65,7 +76,6 @@ function Carousel({
 
     /* Handles keyboard presses */ 
     const handleKeyDown = useCallback((event) => {
-        console.log(event.keyCode, event.target);
         if (event.keyCode === 37) {
             // left key
             setActive(Math.max(activeIndex-1, 0));
@@ -75,16 +85,6 @@ function Carousel({
         }
     }, [imgs, setActive, activeIndex]);
 
-    /* Focuses the active element */
-    useEffect(() => {
-        if (rootEl.current) {
-            const activeEl = rootEl.current.querySelector('.CarouselItemContainer--active');
-            if (activeEl) {
-                activeEl.focus();
-            }
-        }
-    }, [activeIndex])
-
     return (
         <div ref={rootEl} onKeyDown={handleKeyDown} tabIndex={0} className="Carousel">
             <div className="CarouselSlider">
@@ -92,18 +92,6 @@ function Carousel({
             </div>
         </div>
     );
-}
-
-Carousel.defaultProps = {
-    active: 0
-}
-
-Carousel.propTypes = {
-    imgs: PropTypes.arrayOf(PropTypes.shape({
-        src: PropTypes.string,
-        alt: PropTypes.string
-    })).isRequired,
-    active: PropTypes.number
 }
 
 export default Carousel;
