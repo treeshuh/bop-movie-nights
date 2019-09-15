@@ -16,11 +16,11 @@ const App: React.FC = () => {
     }));
     return (
         <div className="App">
-            {/* <Debug /> */}
-            <Header />
+            <Debug />
+            {/* <Header />
             <div className="PollArea Container">
                 <TabbedContent initialTab={0} tabs={tabs} />
-            </div>
+            </div> */}
         </div>
     );
 }

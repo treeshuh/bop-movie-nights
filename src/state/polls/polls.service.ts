@@ -45,6 +45,10 @@ export class PollsService {
         }))
     }
 
+    setActiveOption(option: PollOption | null) {
+        this.pollsStore.setActiveOption(option);
+    }
+
     addOption(id: ID, option: PollOption): void {
         this.pollsStore.upsert(id, poll => ({
             options: [...poll.options, option]
