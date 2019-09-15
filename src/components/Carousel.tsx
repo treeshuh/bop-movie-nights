@@ -86,7 +86,7 @@ const Carousel: React.FC<CarouselProps> = ({
     }, [imgs, setActive, activeIndex]);
 
     return (
-        <div ref={rootEl} onKeyDown={handleKeyDown} tabIndex={0} className="Carousel">
+        <div ref={rootEl} onKeyDown={handleKeyDown} className="Carousel">
             <div className="CarouselSlider">
                 { images }
             </div>

@@ -16,6 +16,7 @@ const App: React.FC = () => {
             <Header />
             <div className="PollArea Container">
                 <TabbedContent />
+                <Poll />
             </div>
         </div>
     );
