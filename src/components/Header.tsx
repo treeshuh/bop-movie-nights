@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import YoutubeLightbox from './YoutubeLightbox';
 import PlayButton from './PlayButton';
 import '../styles/Header.scss';
@@ -7,6 +7,16 @@ import moment from 'moment';
 
 export default () => {
     const [upcomingMovie] = useUpcomingMovieFacade();
+    const [isTrailerOpen, setTrailerOpen] = useState(false);
+
+    // Hooks must be defined before loading screen return
+    const openTrailer = useCallback(() => {
+        setTrailerOpen(true);
+    }, [setTrailerOpen]);
+
+    const closeTrailer = useCallback(() => {
+        setTrailerOpen(false);
+    }, [setTrailerOpen]);
 
     // Loading state
     if (upcomingMovie === null) {
@@ -15,30 +25,22 @@ export default () => {
         );
     }
     
-    const [
-        wallpaper,
+    const {
+        wallpaperUrl,
         title,
         genre,
+        trailerUrl,
         plot,
         website,
         runtime,
-        rating,
-        screeningDate,
-    ] = [
-        upcomingMovie.wallpaperUrl,
-        upcomingMovie.title,
-        upcomingMovie.genre,
-        upcomingMovie.plot,
-        upcomingMovie.website,
-        upcomingMovie.runtime,
-        upcomingMovie.rated,
-        upcomingMovie.watchDate,
-    ];
+        rated,
+        watchDate
+     } = upcomingMovie || {};
 
     return (
         <div
             className="Header"
-            style={{ backgroundImage: `url(${wallpaper})` }}
+            style={{ backgroundImage: `url(${wallpaperUrl})` }}
         >
             <div className="Container">
                 <h1 className="Header-title">{title}</h1>
@@ -47,9 +49,9 @@ export default () => {
                         <div key={g} className="Header-genre">{g}</div>
                     ))}
                 </div>
-                <button className="Header-trailer" onClick={() => {}/*this.openTrailer*/}>
+                <button className="Header-trailer" onClick={openTrailer}>
                     Watch Trailer
-                        <PlayButton />
+                    <PlayButton />
                 </button>
 
                 <div className="Header-text-container">
@@ -59,22 +61,22 @@ export default () => {
                     </p>}
                     <div>
                         {runtime && <div className="Header-runtime">{runtime}</div>}
-                        {rating && <div className="Header-rating">{rating}</div>}
+                        {rated && <div className="Header-rating">{rated}</div>}
                     </div>
                     <h2 className="Header-subtitle">
                         Upcoming:
                         &nbsp;
-                        {moment(screeningDate.seconds * 1000).format('dddd, MMMM Do')}
+                        {moment(watchDate.seconds * 1000).format('dddd, MMMM Do')}
                         &nbsp;
-                        ({moment(screeningDate.seconds * 1000).fromNow()})
+                        ({moment(watchDate.seconds * 1000).fromNow()})
                     </h2>
                 </div>
             </div>
-            {/* <YoutubeLightbox
-                src={trailer}
+            <YoutubeLightbox
+                src={trailerUrl}
                 isOpen={isTrailerOpen}
-                onClose={this.closeTrailer}
-            /> */}
+                onClose={closeTrailer}
+            />
         </div>
     )
 };
