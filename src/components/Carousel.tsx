@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useCallback, useEffect, useLayoutEffect } from 'react';
 import classNames from 'classnames';
 import '../styles/Carousel.scss';
 
@@ -20,7 +20,7 @@ const Carousel: React.FC<CarouselProps> = ({
 }) => {
 
     const [activeIndex, setActive] = useState(active || 0);
-    const rootEl = useRef<HTMLDivElement>(null);
+    const [rootEl, setRoot] = useState<HTMLDivElement | null>(null);
 
     const handleImageClick = useCallback((event) => {
         const {
@@ -52,12 +52,12 @@ const Carousel: React.FC<CarouselProps> = ({
 
     /* Handles responsive and transforms */
     const handleResize = useCallback(() => {
-        let thisRoot = rootEl.current;
+        let thisRoot = rootEl;
         if (thisRoot === null) {
             return;
         }
         const slideEl: HTMLElement | null = thisRoot.querySelector('.CarouselSlider');
-        const firstEl: HTMLElement | null = thisRoot.querySelector('.Carousel .CarouselImageContainer');
+        const firstEl: HTMLElement | null = thisRoot.querySelector('.CarouselSlider .CarouselImageContainer');
         const activeEl: HTMLElement | null = thisRoot.querySelector('.CarouselImageContainer--active');
         if (slideEl && firstEl && activeEl) {
             const firstLeft = firstEl.offsetLeft;
@@ -66,10 +66,10 @@ const Carousel: React.FC<CarouselProps> = ({
             const slideWidth = slideEl.offsetWidth;
             slideEl.style.transform = `translateX(${firstLeft - activeLeft + slideWidth/2 - activeWidth/2}px)`;
         }
-    }, []);
-    useEffect(handleResize, [handleResize, activeIndex]);
+    }, [rootEl]);
+    useLayoutEffect(handleResize, [handleResize, active, imgs, activeIndex, rootEl]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         window.addEventListener('resize', handleResize);
         return function cleanup() {
             window.removeEventListener('resize', handleResize);
@@ -102,7 +102,7 @@ const Carousel: React.FC<CarouselProps> = ({
     }, [setActive, activeIndex, imgs]);
 
     return (
-        <div ref={rootEl} onKeyDown={handleKeyDown} className="Carousel" tabIndex={0}>
+        <div ref={setRoot} onKeyDown={handleKeyDown} className="Carousel" tabIndex={0}>
             <div className="CarouselSlider">
                 { images }
             </div>
