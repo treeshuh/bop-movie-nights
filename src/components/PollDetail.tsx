@@ -2,6 +2,8 @@ import React, { useCallback, useState } from 'react';
 import YoutubeLightbox from './YoutubeLightbox';
 import { Movie } from '../state/movies/movie.model';
 import '../styles/PollDetail.scss';
+import { useUserFacade } from '../hooks/user.hook';
+import { usePollsFacade } from '../hooks/polls.hook';
 
 interface PollDetailProps {
     movie: Movie | null,
@@ -17,6 +19,8 @@ const PollDetail: React.FC<PollDetailProps> = ({
 }) => {
     const [isTrailerOpen, setTrailerOpen] = useState(false);
     const [trailerUrl, setTrailerUrl] = useState(null);
+    const [userState, login, logout] = useUserFacade();
+    const [pollsState, setActivePoll, setActivePollOption, addPollVote, voteForActiveOption, hasVotedForActiveOption] = usePollsFacade();
 
     const openTrailer = useCallback((event) => {
         const { url } = event.target.dataset;
@@ -54,9 +58,21 @@ const PollDetail: React.FC<PollDetailProps> = ({
             </div>
             <div className="PollDetail-actions">
                 <button data-url={movie.trailerUrl} onClick={openTrailer}>Trailer</button>
-                <button onClick={handleSave}>
-                    <span className="Star" /> ({count || 0})
-                </button>
+                {userState.user
+                    ? (
+                        <button
+                            onClick={handleSave}
+                            disabled={hasVotedForActiveOption()}
+                            className={`${hasVotedForActiveOption() ? 'active' : ''}`}
+                        >
+                            <span className="Star" /> ({count || 0})
+                        </button>
+                    ) : (
+                        <button onClick={() => login()}>
+                            Login to Vote
+                        </button>
+                    )
+                }
             </div>
             <YoutubeLightbox
                 src={trailerUrl}

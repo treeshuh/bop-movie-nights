@@ -18,7 +18,7 @@ export const upcomingMovie$ = docData<UpcomingMovie>(db.doc('app/upcomingMovie')
 export const movies$ = collectionData<Movie>(db.collection('movies'), 'id');
 export const polls$ = collectionData<Poll>(db.collection('polls'), 'id');
 
-export async function addVote(id: string, imdbId: string): Promise<void> {
+export async function addVote(userId: string, id: string, imdbId: string): Promise<void> {
     const pollRef = await firebase.firestore().collection('polls').doc(id);
     return firebase.firestore().runTransaction(async (transaction: firebase.firestore.Transaction) => {
         const pollDoc = await transaction.get(pollRef);
@@ -26,12 +26,19 @@ export async function addVote(id: string, imdbId: string): Promise<void> {
             throw new Error(`Document with ref ID "${id}" does not exist!`);
         }
         const pollOptions: PollOption[] = pollDoc.get('options');
-        const updatedPollOptions = pollOptions.map(option => ({
-            ...option,
-            count: (option.imdbId === imdbId
-                ? option.count + 1
-                : option.count) || 0
-        }));
+        const updatedPollOptions = pollOptions.map(option => {
+            if (option.imdbId === imdbId) {
+                if (option.hasVotedUids && option.hasVotedUids.includes(userId)) {
+                    throw new Error('User has already voted.');
+                }
+                return {
+                    ...option,
+                    count: (option.count + 1) || 0,
+                    hasVotedUids: (option.hasVotedUids || []).concat(userId)
+                };
+            }
+            return option;
+        });
         transaction.update(pollRef, { options: updatedPollOptions });
     });
 }

@@ -55,13 +55,17 @@
             margin-left: 10px;
         }
 
-        &:hover {
+        &:hover,
+        &.active {
             background-color: $color-yellow;
             color: black;
 
             .Star::before {
                 color: black;
             }
+        }
+        &.active {
+            cursor: default;
         }
 
         .Star {

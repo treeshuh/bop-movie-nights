@@ -2,14 +2,22 @@ import React from 'react';
 import { usePollsFacade } from '../hooks/polls.hook';
 import { useMoviesFacade } from '../hooks/movies.hook';
 import { useUpcomingMovieFacade } from '../hooks/upcoming-movie.hook';
+import { useUserFacade } from '../hooks/user.hook';
 
 export default () => {
     const [pollsState, setActivePoll, setActivePollOption, addPollVote, voteForActiveOption] = usePollsFacade();
     const [moviesState] = useMoviesFacade();
     const [upcomingMovie] = useUpcomingMovieFacade();
+    const [userState, login, logout] = useUserFacade();
 
     return (
         <div style={{ background: '#bada55' }}>
+            <div className="UserDebug">
+                <h1>User</h1>
+                <button onClick={() => login()}>Login</button>
+                <button onClick={() => logout()}>Logout</button>
+                <pre>{JSON.stringify(userState.user, null, 2)}</pre>
+            </div>
             <div className="PollsDebug">
                 <h1>Polls</h1>
                 {/* <button onClick={() => {}}>Create Poll</button>

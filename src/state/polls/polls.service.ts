@@ -15,6 +15,7 @@ export class PollsService {
                 options: poll.options.map((option): PollOption => ({
                     imdbId: option.imdbId,
                     count: option.count,
+                    hasVotedUids: option.hasVotedUids
                 })),
                 archived: poll.archived,
                 order: poll.order
@@ -26,8 +27,8 @@ export class PollsService {
         this.pollsStore.setActive(id);
     }
 
-    async addVote(id: ID, optionId: string): Promise<void> {
-        return addVote(id.toString(), optionId);
+    async addVote(userId: string, id: ID, optionId: string): Promise<void> {
+        return addVote(userId, id.toString(), optionId);
     }
 
     setActiveOption(option: PollOption | null) {

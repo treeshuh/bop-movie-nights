@@ -11,4 +11,5 @@ export interface Poll {
 export interface PollOption {
     imdbId: string;
     count: number;
+    hasVotedUids: string[];
 }

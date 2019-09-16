@@ -5,6 +5,7 @@ import { pollsQuery } from '../state/polls/polls.query';
 import { Poll, PollOption } from '../state/polls/poll.model';
 import { ID } from '@datorama/akita';
 import { first } from 'rxjs/operators';
+import { useUserFacade } from './user.hook';
 
 interface PollsState {
     polls: Poll[];
@@ -20,7 +21,8 @@ function onEmit<T>(source$: Observable<T>, nextFn: (value: T) => void): Subscrip
 /**
  * View Model for Poll view components
  */
-export function usePollsFacade(): [PollsState, Function, Function, Function, Function] {
+export function usePollsFacade(): [PollsState, Function, Function, Function, Function, Function] {
+    const [userState, login] = useUserFacade();
     const [state, setState] = useState<PollsState>({
         polls: [],
         livePolls: [],
@@ -35,12 +37,24 @@ export function usePollsFacade(): [PollsState, Function, Function, Function, Fun
         }
     };
     const setActiveOption = (option: PollOption) => pollsService.setActiveOption(option);
-    const addPollVote = (id: ID, optionId: string) => pollsService.addVote(id, optionId);
+    const addPollVote = async (id: ID, optionId: string) => {
+        if (userState.user) {
+            pollsService.addVote(userState.user.uid, id, optionId)
+        } else {
+            login();
+        }
+    };
     const voteForActiveOption = () => {
         if (!(state.activePoll && state.activePollOption)) {
             throw Error(`Cannot select poll option.`);
         }
-        pollsService.addVote(state.activePoll.id, state.activePollOption.imdbId);
+        return addPollVote(state.activePoll.id, state.activePollOption.imdbId);
+    }
+    const hasVotedForActiveOption = () => {
+        if (state.activePollOption && state.activePollOption.hasVotedUids && userState.user) {
+            return state.activePollOption.hasVotedUids.includes(userState.user.uid);
+        }
+        return false;
     }
 
     /**
@@ -75,5 +89,5 @@ export function usePollsFacade(): [PollsState, Function, Function, Function, Fun
         return () => { subscriptions.forEach(subscription => subscription.unsubscribe()); }
     }, []);
 
-    return [state, setActive, setActiveOption, addPollVote, voteForActiveOption];
+    return [state, setActive, setActiveOption, addPollVote, voteForActiveOption, hasVotedForActiveOption];
 }
