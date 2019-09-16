@@ -18,17 +18,17 @@ const HeaderPlaceholder: React.FC = () => {
                     primaryColor="#f1c40f"
                     secondaryColor="#ecda92"
                 >
-                    <rect x="0" y="18" width="200" height="25" />
-                    <rect x="0" y="55" width="35" height="13" />
-                    <rect x="45" y="55" width="35" height="13" />
-                    <rect x="90" y="55" width="35" height="13" />
-                    <rect x="135" y="55" width="35" height="13" />
-                    <rect x="180" y="55" width="35" height="13" />
-                    <rect x="225" y="55" width="35" height="13" />
-                    <rect x="0" y="80" width="80" height="20" />
-                    <rect x="0" y="130" width="380" height="18" />
-                    <rect x="0" y="154" width="40" height="9" />
-                    <rect x="0" y="204" width="220" height="24" />
+                    <rect x="0" y="24" width="200" height="20" />
+                    <rect x="0" y="53" width="35" height="13" />
+                    <rect x="45" y="53" width="35" height="13" />
+                    <rect x="90" y="53" width="35" height="13" />
+                    <rect x="135" y="53" width="35" height="13" />
+                    <rect x="180" y="53" width="35" height="13" />
+                    <rect x="225" y="53" width="35" height="13" />
+                    <rect x="0" y="74" width="100" height="20" />
+                    <rect x="0" y="126" width="380" height="24" />
+                    <rect x="0" y="156" width="48" height="12" />
+                    <rect x="0" y="200" width="220" height="27" />
                 </ContentLoader>
             </div>
         </div>
