@@ -26,12 +26,18 @@ export function useUpcomingMovieFacade(): [UpcomingMovie | null] {
     useEffect(() => {
         const subscription = onEmit<UpcomingMovieExternal>(
             upcomingMovie$,
-            upcomingMovie => setState({
-                upcomingMovie: {
-                    ...upcomingMovie,
-                    ...getMovieById(upcomingMovie.imdbId),
+            upcomingMovie => {
+                // Don't set state until movie details are ready
+                const movieDetails = getMovieById(upcomingMovie.imdbId);
+                if (movieDetails) {
+                    setState({
+                        upcomingMovie: {
+                            ...upcomingMovie,
+                            ...movieDetails,
+                        }
+                    })
                 }
-            })
+            }
         );
         return () => subscription.unsubscribe();
     }, [getMovieById]);
