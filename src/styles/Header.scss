@@ -1,5 +1,7 @@
 @import './_util/typography';
 @import './_util/breakpoints';
+@import './_util/button';
+@import './_util/color';
 
 @keyframes pulse {
     to {
@@ -9,7 +11,6 @@
 
 .Header {
     $secondary-color: #f1c40f;
-    $dark-white: #ecf0f1;
     $middle-spacer: 60px;
 
     color: white;
@@ -49,27 +50,13 @@
     }
 
     .Header-trailer {
-        @include text_mono();
-
-        background-color: white;
-        color: black;
-        border: 2px solid white;
-        border-radius: 2px;
-        padding: 8px 18px;
-        margin-top: 15px;
+        @include button();
         margin-bottom: $middle-spacer;
-        transition: background-color 200ms ease-in;
 
         .PlayButton {
             border-color: black;
             margin-left: 0.75em;
-        }
-
-        &:hover {
-            cursor: pointer;
-            background-color: $dark-white;
-        }
-        
+        }    
     }
 
     .Header-text-container {
@@ -87,7 +74,7 @@
         color: white;
         transition: color 200ms ease-in;
         &:hover {
-            color: $dark-white;
+            color: $color-dark-white;
         }
     }
 
@@ -103,6 +90,6 @@
     }
 
     .Header-rating, .Header-runtime {
-        @include text_mono();
+        @include text_utility();
     }
 }

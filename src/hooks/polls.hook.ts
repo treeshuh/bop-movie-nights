@@ -41,7 +41,7 @@ export function usePollsFacade(): [PollsState, Function, Function, Function, Fun
     useEffect(() => {
         const subscriptions = [
             onEmit<Poll[]>(pollsQuery.polls$, polls => setState(state => ({ ...state, polls }))),
-            onEmit<Poll>(pollsQuery.active$, poll => setState(state => ({ ...state, activePoll: poll }))),
+            onEmit<Poll>(pollsQuery.active$, poll => setState(state => ({ ...state, activePoll: poll, activePollOption: null }))),
             onEmit<PollOption | null>(pollsQuery.activeOption$, pollOption => setState(state => ({ ...state, activePollOption: pollOption }))),
         ];
 

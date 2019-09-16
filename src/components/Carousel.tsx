@@ -9,12 +9,14 @@ interface Image {
 
 interface CarouselProps {
     imgs: Image[],
-    active?: number 
+    active?: number,
+    activeCallback?(index: number): any
 }
 
 const Carousel: React.FC<CarouselProps> = ({
     imgs,
     active,
+    activeCallback
 }) => {
 
     const [activeIndex, setActive] = useState(active || 0);
@@ -85,8 +87,22 @@ const Carousel: React.FC<CarouselProps> = ({
         }
     }, [imgs, setActive, activeIndex]);
 
+    /* Emits activeCallback */
+    useEffect(() => {
+        if (activeCallback) {
+            activeCallback(activeIndex);
+        }
+    }, [activeCallback, activeIndex]);
+
+    /* Handles edge case of switching img sets */
+    useEffect(() => {
+        if (activeIndex < 0 || activeIndex >= imgs.length) {
+            setActive(0);
+        }
+    }, [setActive, activeIndex, imgs]);
+
     return (
-        <div ref={rootEl} onKeyDown={handleKeyDown} className="Carousel">
+        <div ref={rootEl} onKeyDown={handleKeyDown} className="Carousel" tabIndex={0}>
             <div className="CarouselSlider">
                 { images }
             </div>

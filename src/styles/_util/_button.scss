@@ -1,0 +1,17 @@
+@import './color';
+@import './typography';
+
+@mixin button() {
+    @include text_mono();
+    background-color: white;
+    color: black;
+    border: 0;
+    border-radius: 2px;
+    padding: 8px 18px;
+    margin-top: 15px;
+    transition: background-color 200ms ease-in;
+    &:hover {
+        cursor: pointer;
+        background-color: $color-dark-white;
+    }
+}

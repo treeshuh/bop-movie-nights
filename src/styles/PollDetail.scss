@@ -1,0 +1,81 @@
+@import './_util/breakpoints';
+@import './_util/typography';
+@import './_util/button';
+@import './_util/color';
+
+.PollDetail {
+    min-height: 200px;
+    max-width: 700px;
+    text-align: center;
+    color: white;
+    margin: 20px auto;
+
+    .PollDetail-title {
+        @include text_utility;
+        margin-bottom: 10px;
+    }
+
+    .PollDetail-tag {
+        @include text_utility();
+        margin-right: 20px;
+        font-size: 70%;
+        &:last-child {
+            margin-right: 0;
+        }
+
+        @include breakpoint('md') {
+            font-size: 80%;
+        }
+    }
+
+    .PollDetail-genre {
+        margin-right: 10px;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    .PollDetail-plot {
+        max-width: calc(100% - 20px);
+        margin: 10px auto;
+        font-size: 90%;
+
+        @include breakpoint('xs') {
+            max-width: 75%;
+        }
+    }
+
+    button {
+        @include button();
+        color: white;
+        background-color: $color-dark-gray;
+
+        &:not(:first-child) {
+            margin-left: 10px;
+        }
+
+        &:hover {
+            background-color: $color-yellow;
+            color: black;
+
+            .Star::before {
+                color: black;
+            }
+        }
+
+        .Star {
+            position: relative;
+            padding-left: 1.5em;
+            pointer-events: none;
+            &::before {
+                content: '\1F7CA';
+                position: absolute;
+                top: 50%;
+                left: 0;
+                transform: translateY(-50%) scale(1.5); 
+                color: white;
+            }
+        }
+    }
+}

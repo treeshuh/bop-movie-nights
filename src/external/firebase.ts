@@ -28,9 +28,9 @@ export async function addVote(id: string, imdbId: string): Promise<void> {
         const pollOptions: PollOption[] = pollDoc.get('options');
         const updatedPollOptions = pollOptions.map(option => ({
             ...option,
-            count: option.imdbId === imdbId
+            count: (option.imdbId === imdbId
                 ? option.count + 1
-                : option.count
+                : option.count) || 0
         }));
         transaction.update(pollRef, { options: updatedPollOptions });
     });

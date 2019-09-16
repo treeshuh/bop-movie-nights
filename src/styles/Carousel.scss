@@ -26,10 +26,12 @@
     
     .CarouselSlider {
         transition: $transition;
+        display: flex;
+        align-items: center;
     }
 
     .CarouselImageContainer {
-        display: inline-block;
+        display: inline-flex;
         position: relative;
         perspective: 1000px;
         transform-style: preserve-3d;
@@ -50,12 +52,12 @@
 
         &:hover {
             cursor: pointer;
-            // transform: scale(1.02);
         }
     }
 
     .CarouselImage {
-        pointer-events: all;
+        max-width: 40vw;
+        pointer-events: none;
         transition: $transition;
         $image-transform: scale(0.9) translateZ(-200px);
         transform: $image-transform;
