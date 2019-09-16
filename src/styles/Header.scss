@@ -1,7 +1,5 @@
 @import './_util/typography';
 @import './_util/breakpoints';
-@import './_util/button';
-@import './_util/color';
 
 @keyframes pulse {
     to {
@@ -11,6 +9,7 @@
 
 .Header {
     $secondary-color: #f1c40f;
+    $dark-white: #ecf0f1;
     $middle-spacer: 60px;
 
     color: white;
@@ -20,6 +19,12 @@
     align-items: center;
     position: relative;
     overflow: hidden;
+    // opacity: 0;
+    // transition: 200ms opacity ease;
+
+    // &.loaded {
+    //     opacity: 1;
+    // }
 
     .Header-background {
         position: absolute;
@@ -50,13 +55,27 @@
     }
 
     .Header-trailer {
-        @include button();
+        @include text_mono();
+
+        background-color: white;
+        color: black;
+        border: 2px solid white;
+        border-radius: 2px;
+        padding: 8px 18px;
+        margin-top: 15px;
         margin-bottom: $middle-spacer;
+        transition: background-color 200ms ease-in;
 
         .PlayButton {
             border-color: black;
             margin-left: 0.75em;
-        }    
+        }
+
+        &:hover {
+            cursor: pointer;
+            background-color: $dark-white;
+        }
+        
     }
 
     .Header-text-container {
@@ -74,7 +93,7 @@
         color: white;
         transition: color 200ms ease-in;
         &:hover {
-            color: $color-dark-white;
+            color: $dark-white;
         }
     }
 
@@ -90,6 +109,6 @@
     }
 
     .Header-rating, .Header-runtime {
-        @include text_utility();
+        @include text_mono();
     }
 }

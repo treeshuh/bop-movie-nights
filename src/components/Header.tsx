@@ -2,10 +2,40 @@ import React, { useState, useCallback } from 'react';
 import YoutubeLightbox from './YoutubeLightbox';
 import PlayButton from './PlayButton';
 import '../styles/Header.scss';
+import '../styles/HeaderPlaceholder.scss';
 import { useUpcomingMovieFacade } from '../hooks/upcoming-movie.hook';
 import moment from 'moment';
+import ContentLoader from 'react-content-loader';
 
-export default () => {
+const HeaderPlaceholder: React.FC = () => {
+    return (
+        <div className="Header HeaderPlaceholder">
+            <div className="Container">
+                <ContentLoader
+                    height={240}
+                    width={400}
+                    speed={2}
+                    primaryColor="#f1c40f"
+                    secondaryColor="#ecda92"
+                >
+                    <rect x="0" y="18" width="200" height="25" />
+                    <rect x="0" y="55" width="35" height="13" />
+                    <rect x="45" y="55" width="35" height="13" />
+                    <rect x="90" y="55" width="35" height="13" />
+                    <rect x="135" y="55" width="35" height="13" />
+                    <rect x="180" y="55" width="35" height="13" />
+                    <rect x="225" y="55" width="35" height="13" />
+                    <rect x="0" y="80" width="80" height="20" />
+                    <rect x="0" y="130" width="380" height="18" />
+                    <rect x="0" y="154" width="40" height="9" />
+                    <rect x="0" y="204" width="220" height="24" />
+                </ContentLoader>
+            </div>
+        </div>
+    )
+}
+
+const Header: React.FC = () => {
     const [upcomingMovie] = useUpcomingMovieFacade();
     const [isTrailerOpen, setTrailerOpen] = useState(false);
 
@@ -18,13 +48,15 @@ export default () => {
         setTrailerOpen(false);
     }, [setTrailerOpen]);
 
+    const isLoading = upcomingMovie === null;
+
     // Loading state
-    if (upcomingMovie === null) {
+    if (isLoading) {
         return (
-            <h1>Loading...</h1>
+            <HeaderPlaceholder />
         );
     }
-    
+
     const {
         wallpaperUrl,
         title,
@@ -35,7 +67,7 @@ export default () => {
         runtime,
         rated,
         watchDate
-     } = upcomingMovie || {};
+    } = upcomingMovie || {};
 
     return (
         <div className="Header">
@@ -49,7 +81,7 @@ export default () => {
                 </div>
                 <button className="Header-trailer" onClick={openTrailer}>
                     Watch Trailer
-                    <PlayButton />
+                <PlayButton />
                 </button>
 
                 <div className="Header-text-container">
@@ -74,3 +106,5 @@ export default () => {
         </div>
     )
 };
+
+export default Header;
