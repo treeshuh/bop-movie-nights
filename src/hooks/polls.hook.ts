@@ -8,6 +8,7 @@ import { first } from 'rxjs/operators';
 
 interface PollsState {
     polls: Poll[];
+    livePolls: Poll[];
     activePoll: Poll | null;
     activePollOption: PollOption | null;
 }
@@ -22,6 +23,7 @@ function onEmit<T>(source$: Observable<T>, nextFn: (value: T) => void): Subscrip
 export function usePollsFacade(): [PollsState, Function, Function, Function, Function] {
     const [state, setState] = useState<PollsState>({
         polls: [],
+        livePolls: [],
         activePoll: null,
         activePollOption: null
     });
@@ -46,7 +48,13 @@ export function usePollsFacade(): [PollsState, Function, Function, Function, Fun
      */
     useEffect(() => {
         const subscriptions = [
-            onEmit<Poll[]>(pollsQuery.polls$, polls => setState(state => ({ ...state, polls }))),
+            onEmit<Poll[]>(pollsQuery.polls$, polls => setState(state => {
+                return {
+                    ...state,
+                    polls,
+                    livePolls: polls.filter(poll => !poll.archived)
+                };
+            })),
             onEmit<Poll>(pollsQuery.active$, poll => setState(state => ({ ...state, activePoll: poll }))),
             onEmit<PollOption | null>(pollsQuery.activeOption$, pollOption => setState(state => ({ ...state, activePollOption: pollOption }))),
         ];
@@ -56,7 +64,10 @@ export function usePollsFacade(): [PollsState, Function, Function, Function, Fun
             pollsQuery.polls$.pipe(
                 first(polls => polls.length > 0)
             ).subscribe((polls) => {
-                setActive(polls[0].id);
+                const livePolls = polls.filter(poll => !poll.archived);
+                if (livePolls.length > 0) {
+                    setActive(livePolls[0].id);
+                }
             })
         )
 

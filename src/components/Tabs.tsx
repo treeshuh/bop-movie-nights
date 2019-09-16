@@ -30,7 +30,7 @@ export default () => {
                         >
                             <button className="TabButton" data-id={poll.id} onClick={clickTab}>
                                 {poll.title}
-                                {poll === pollsState.polls[0] && <small>Current</small>}
+                                {poll === pollsState.livePolls[0] && <small>Current</small>}
                             </button>
                         </li>
                     )
