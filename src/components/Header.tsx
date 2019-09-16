@@ -14,7 +14,7 @@ const HeaderPlaceholder: React.FC = () => {
                 <ContentLoader
                     height={240}
                     width={400}
-                    speed={2}
+                    speed={1}
                     primaryColor="#f1c40f"
                     secondaryColor="#ecda92"
                 >

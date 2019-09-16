@@ -27,15 +27,7 @@ export class PollsService {
     }
 
     async addVote(id: ID, optionId: string): Promise<void> {
-        await addVote(id.toString(), optionId);
-        this.pollsStore.upsert(id, poll => ({
-            options: poll.options.map(
-                option => ({
-                    ...option,
-                    count: option.count + 1
-                })
-            )
-        }))
+        return addVote(id.toString(), optionId);
     }
 
     setActiveOption(option: PollOption | null) {

@@ -25,7 +25,13 @@ export function usePollsFacade(): [PollsState, Function, Function, Function, Fun
         activePoll: null,
         activePollOption: null
     });
-    const setActive = (id: ID) => pollsService.setActive(id);
+    const setActive = (id: ID) => {
+        pollsService.setActive(id);
+        // Reset active poll option when active poll is changed
+        if (state.activePoll && state.activePoll.id !== id) {
+            pollsService.setActiveOption(null);
+        }
+    };
     const setActiveOption = (option: PollOption) => pollsService.setActiveOption(option);
     const addPollVote = (id: ID, optionId: string) => pollsService.addVote(id, optionId);
     const voteForActiveOption = () => {
@@ -41,7 +47,7 @@ export function usePollsFacade(): [PollsState, Function, Function, Function, Fun
     useEffect(() => {
         const subscriptions = [
             onEmit<Poll[]>(pollsQuery.polls$, polls => setState(state => ({ ...state, polls }))),
-            onEmit<Poll>(pollsQuery.active$, poll => setState(state => ({ ...state, activePoll: poll, activePollOption: null }))),
+            onEmit<Poll>(pollsQuery.active$, poll => setState(state => ({ ...state, activePoll: poll }))),
             onEmit<PollOption | null>(pollsQuery.activeOption$, pollOption => setState(state => ({ ...state, activePollOption: pollOption }))),
         ];
 
