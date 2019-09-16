@@ -1,12 +1,10 @@
 import React from 'react';
 import './styles/App.scss';
 import Header from './components/Header';
-import TabbedContent from './components/TabbedContent';
+import Tabs from './components/Tabs';
 import Poll from './components/Poll';
 
 // temp data
-import UpcomingMovie from './data/upcoming.json';
-import TabsData from './data/tabs.json';
 import Debug from './components/Debug';
 
 const App: React.FC = () => {
@@ -15,7 +13,7 @@ const App: React.FC = () => {
             {/* <Debug /> */}
             <Header />
             <div className="PollArea Container">
-                <TabbedContent />
+                <Tabs />
                 <Poll />
             </div>
         </div>
