@@ -7,7 +7,6 @@ import { map } from 'rxjs/operators';
 
 const sortPolls = R.pipe(
     R.sortBy(R.prop('order')),
-    R.filter(R.propEq('archived', false)),
 );
 
 export class PollsQuery extends QueryEntity<PollsState, Poll> {
