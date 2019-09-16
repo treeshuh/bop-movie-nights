@@ -109,6 +109,6 @@
     }
 
     .Header-rating, .Header-runtime {
-        @include text_mono();
+        @include text_utility();
     }
 }
