@@ -6,6 +6,9 @@ import { Poll, PollOption } from '../state/polls/poll.model';
 import { ID } from '@datorama/akita';
 import { first } from 'rxjs/operators';
 import { useUserFacade } from './user.hook';
+import * as firebase from '../external/firebase';
+import _firebase from 'firebase';
+import { UpdatePollRequest } from '../external/firebase';
 
 interface PollsState {
     polls: Poll[];
@@ -21,8 +24,18 @@ function onEmit<T>(source$: Observable<T>, nextFn: (value: T) => void): Subscrip
 /**
  * View Model for Poll view components
  */
-export function usePollsFacade(): [PollsState, Function, Function, Function, Function, Function] {
-    const [userState, login] = useUserFacade();
+export function usePollsFacade(): [
+    PollsState,
+    Function,
+    Function,
+    Function,
+    Function,
+    Function,
+    (title: string, order: number) => Promise<_firebase.firestore.DocumentReference> | Promise<void>,
+    (pollId: string, imdbId: string) => Promise<void>,
+    (requests: UpdatePollRequest[]) => Promise<void>,
+] {
+    const [userState, login, , wrapLogin] = useUserFacade();
     const [state, setState] = useState<PollsState>({
         polls: [],
         livePolls: [],
@@ -37,9 +50,10 @@ export function usePollsFacade(): [PollsState, Function, Function, Function, Fun
         }
     };
     const setActiveOption = (option: PollOption) => pollsService.setActiveOption(option);
+
     const addPollVote = async (id: ID, optionId: string) => {
         if (userState.user) {
-            pollsService.addVote(userState.user.uid, id, optionId)
+            firebase.addVote(userState.user.uid, id.toString(), optionId)
         } else {
             login();
         }
@@ -83,11 +97,21 @@ export function usePollsFacade(): [PollsState, Function, Function, Function, Fun
                     setActive(livePolls[0].id);
                 }
             })
-        )
+        );
 
         pollsService.load();
         return () => { subscriptions.forEach(subscription => subscription.unsubscribe()); }
     }, []);
 
-    return [state, setActive, setActiveOption, addPollVote, voteForActiveOption, hasVotedForActiveOption];
+    return [
+        state,
+        setActive,
+        setActiveOption,
+        addPollVote,
+        voteForActiveOption,
+        hasVotedForActiveOption,
+        wrapLogin(firebase.createPoll),
+        wrapLogin(firebase.addPollOption),
+        wrapLogin(firebase.updatePolls),
+    ];
 }

@@ -18,12 +18,12 @@ export const upcomingMovie$ = docData<UpcomingMovie>(db.doc('app/upcomingMovie')
 export const movies$ = collectionData<Movie>(db.collection('movies'), 'id');
 export const polls$ = collectionData<Poll>(db.collection('polls'), 'id');
 
-export async function addVote(userId: string, id: string, imdbId: string): Promise<void> {
-    const pollRef = await firebase.firestore().collection('polls').doc(id);
-    return firebase.firestore().runTransaction(async (transaction: firebase.firestore.Transaction) => {
+export async function addVote(userId: string, pollId: string, imdbId: string): Promise<void> {
+    const pollRef = await db.collection('polls').doc(pollId);
+    return db.runTransaction(async (transaction: firebase.firestore.Transaction) => {
         const pollDoc = await transaction.get(pollRef);
         if (!pollDoc.exists) {
-            throw new Error(`Document with ref ID "${id}" does not exist!`);
+            throw new Error(`Document with ref ID "${pollId}" does not exist!`);
         }
         const pollOptions: PollOption[] = pollDoc.get('options');
         const updatedPollOptions = pollOptions.map(option => {
@@ -43,9 +43,70 @@ export async function addVote(userId: string, id: string, imdbId: string): Promi
     });
 }
 
-// const log = (x: any) => console.log(x);
-// upcomingMovie$.subscribe(log);
-// movies$.subscribe(log);
-// polls$.subscribe(log);
+export async function createPoll(
+    title: string,
+    order: number
+): Promise<firebase.firestore.DocumentReference> {
+    return db.collection('polls').add({
+        title,
+        order,
+        archived: false,
+        options: [],
+    });
+}
+
+export async function addPollOption(pollId: string, imdbId: string) {
+    const pollRef = await db.collection('polls').doc(pollId);
+    return db.runTransaction(async (transaction: firebase.firestore.Transaction) => {
+        const pollDoc = await transaction.get(pollRef);
+        if (!pollDoc.exists) {
+            throw new Error(`Document with ref ID "${pollId}" does not exist!`);
+        }
+        const pollOptions: PollOption[] = pollDoc.get('options');
+        const updatedPollOptions = pollOptions.concat([{
+            imdbId,
+            hasVotedUids: [],
+            count: 0,
+        }]);
+        transaction.update(pollRef, { options: updatedPollOptions });
+    });
+}
+
+export type UpdatePollRequest = {
+    id: string;
+    title: string;
+    order: number;
+    archived: boolean;
+}
+
+export async function updatePolls(requests: UpdatePollRequest[]): Promise<void> {
+    const batch = db.batch();
+    requests.forEach(request => {
+        batch.update(db.collection('polls').doc(request.id), {
+            title: request.title,
+            order: request.order,
+            archived: request.archived,
+        });
+    });
+    return batch.commit();
+}
+
+export async function addMovie(imdbId: string, trailerUrl: string) {
+    return db.collection('movies').doc(imdbId).set({
+        trailerUrl,
+    });
+}
+
+export async function setUpcomingMovie(
+    imdbId: string,
+    wallpaperUrl: string,
+    watchDate: Date
+): Promise<void> {
+    return db.collection('app').doc('upcomingMovie').set({
+        imdbId,
+        wallpaperUrl,
+        watchDate: firebase.firestore.Timestamp.fromDate(watchDate),
+    });
+}
 
 export default firebase;
