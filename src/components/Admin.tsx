@@ -9,7 +9,7 @@ import '../styles/Admin.scss';
 
 const Admin: React.FC = () => {
     // TODO: add auth into this
-    const userIsAdmin = true;
+    const userIsAdmin = false;
     const [useAdmin, setAdmin] = useState(false);
     const [moviesState, getMovieById] = useMoviesFacade();
     const [upcomingMovie] = useUpcomingMovieFacade();
