@@ -3,20 +3,27 @@ import { Observable, Subscription } from 'rxjs';
 import { Movie } from '../state/movies/movie.model';
 import { moviesService } from '../state/movies/movies.service';
 import { moviesQuery } from '../state/movies/movies.query';
+import { useUserFacade } from './user.hook';
+import * as firebase from '../external/firebase';
 
 interface MoviesState {
     movies: Movie[];
 }
 
-function onEmit<T>(source$: Observable<T>, nextFn:(value: T) => void): Subscription {
+function onEmit<T>(source$: Observable<T>, nextFn: (value: T) => void): Subscription {
     return source$.subscribe(nextFn, console.error);
 }
 
 /**
  * View Model for Movie view components
  */
-export function useMoviesFacade(): [MoviesState, Function] {
+export function useMoviesFacade(): [
+    MoviesState,
+    Function,
+    (imdbId: string, trailerUrl: string) => Promise<void>
+] {
     const [state, setState] = useState<MoviesState>({ movies: [] });
+    const [, , , wrapLogin] = useUserFacade();
 
     /**
      * Manage subscriptions with auto-cleanup
@@ -35,5 +42,5 @@ export function useMoviesFacade(): [MoviesState, Function] {
         [state.movies]
     );
 
-    return [state, getMovieById];
+    return [state, getMovieById, wrapLogin(firebase.addMovie)];
 }

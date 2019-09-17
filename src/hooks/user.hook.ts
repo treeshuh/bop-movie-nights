@@ -21,7 +21,12 @@ function redirectHome() {
 /**
  * View Model for User view components
  */
-export function useUserFacade(): [UserState, Function, Function] {
+export function useUserFacade(): [
+    UserState,
+    Function,
+    Function,
+    <T extends (...args: any[]) => any>(func: T) => (...funcArgs: Parameters<T>) => ReturnType<T> | Promise<void>
+] {
     const [state, setState] = useState<UserState>({ user: null });
     const login = async () => {
         const actionCodeSettings = {
@@ -42,6 +47,17 @@ export function useUserFacade(): [UserState, Function, Function] {
         redirectHome();
     }
 
+    // Wrap a login-privileged function.
+    // This will redirect to login if not logged in, otherwise it will call the function.
+    function wrapLogin<T extends (...args: any[]) => any>(func: T): (...funcArgs: Parameters<T>) => ReturnType<T> | Promise<void> {
+        return (...args: Parameters<T>): ReturnType<T> | Promise<void> => {
+            if (state.user) {
+                return func(...args);
+            }
+            return login();
+        }
+    }
+
     /**
      * Manage subscriptions with auto-cleanup
      */
@@ -50,7 +66,7 @@ export function useUserFacade(): [UserState, Function, Function] {
         return () => subscription.unsubscribe();
     }, []);
 
-    return [state, login, logout];
+    return [state, login, logout, wrapLogin];
 }
 
 export function useUserSetup() {

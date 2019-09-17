@@ -27,18 +27,8 @@ export class PollsService {
         this.pollsStore.setActive(id);
     }
 
-    async addVote(userId: string, id: ID, optionId: string): Promise<void> {
-        return addVote(userId, id.toString(), optionId);
-    }
-
     setActiveOption(option: PollOption | null) {
         this.pollsStore.setActiveOption(option);
-    }
-
-    addOption(id: ID, option: PollOption): void {
-        this.pollsStore.upsert(id, poll => ({
-            options: [...poll.options, option]
-        }));
     }
 }
 
