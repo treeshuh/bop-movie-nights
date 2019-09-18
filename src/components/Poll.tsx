@@ -50,7 +50,7 @@ const Poll: React.FC = () => {
     }, [activePoll, setActivePollOption]);
 
     if (!(activePoll)) {
-        return <h1>Loading...</h1>;
+        return null;
     }
 
     return (

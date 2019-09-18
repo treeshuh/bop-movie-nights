@@ -16,7 +16,7 @@ export default () => {
     }, [setActivePoll]);
 
     if (pollsState.activePoll === null) {
-        return <h1>Loading...</h1>;
+        return null;
     }
 
     return (

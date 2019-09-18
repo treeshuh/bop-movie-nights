@@ -80,8 +80,8 @@ const Header: React.FC = () => {
                     ))}
                 </div>
                 <button className="Header-trailer" onClick={openTrailer}>
-                    Watch Trailer
-                <PlayButton />
+                    <span>Watch Trailer</span>
+                    <i className="far fa-play-circle" style={{ marginLeft: '10px', fontSize: '20px', verticalAlign: 'middle' }} />
                 </button>
 
                 <div className="Header-text-container">

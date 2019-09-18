@@ -65,10 +65,11 @@ const PollDetail: React.FC<PollDetailProps> = ({
                             disabled={hasVotedForActiveOption()}
                             className={`${hasVotedForActiveOption() ? 'active' : ''}`}
                         >
-                            <span className="Star" /> ({count || 0})
+                            <i className="fas fa-star" style={{ marginRight: 4 }} />
+                            <span>({count || 0})</span>
                         </button>
                     ) : (
-                        <button onClick={() => showLogin(true)}>
+                        <button className="primary" onClick={() => showLogin(true)}>
                             Login to Vote
                         </button>
                     )
