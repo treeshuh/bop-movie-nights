@@ -5,15 +5,21 @@
 .Footer {
     text-align: center;
     background-color: $color-basically-black;
-    color: rgba($color-light-gray, 0.4);
+    color: rgba($color-light-gray, 0.6);
 
     a {
-        color: rgba($color-light-gray, 0.4);;
+        color: rgba($color-light-gray, 0.6);
+        font-weight: bold;
+        transition: color 200ms ease;
+
+        &:hover {
+            color: rgba($color-yellow, 0.4);
+        }
     }
     
     .Container {
         @include breakpoint('sm') {
-            padding: 30px 120px;
+            padding: 30px 120px 40px;
         }
     }
 
@@ -23,7 +29,11 @@
 
     .Footer-subtitle {
         margin-bottom: 20px;
-        color: rgba($color-yellow, 0.3);
+        color: rgba($color-yellow, 0.4);
+    }
+
+    .Footer-suggestions {
+        margin-bottom: 20px;
     }
 
     small {

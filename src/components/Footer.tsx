@@ -20,6 +20,10 @@ const Footer: React.FC = () => (
         <div className="Container">
             <h4 className="Footer-title">BOP Movie Night Club</h4>
             <h5 className="Footer-subtitle">Join us in B13 Tavern most Fridays at 7PM</h5>
+            <h5 className="Footer-suggestions">Suggestions? <Link
+                href="https://forms.gle/fofb9MHWE5TXjw7j7"
+                text="Let us know!"
+            /></h5>
             <small className="Footer-callout">Designs inspired by <Link
                 href="https://dribbble.com/shots/2266601-IMDb-design-concept"
                 text="George Vasyagin"
