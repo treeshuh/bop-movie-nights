@@ -43,6 +43,7 @@ const Login: React.FC = () => {
     const closeLightbox = useCallback(() => {
         setEmail(null);
         setUISubmit(false);
+        showLogin(false);
     }, [setEmail, setUISubmit]);
 
     if (!isLoginShown) {
