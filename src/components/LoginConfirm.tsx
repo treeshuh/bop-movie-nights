@@ -1,16 +1,22 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import Lightbox from 'lightbox-react';
+import { useUserFacade } from '../hooks/user.hook';
 import '../styles/Login.scss';
 
 const LoginConfirm: React.FC = () => {
     const [email, setEmail] = useState<string | null>(null);
-    // const [{ isLoginShown }, login, , , showLogin] = useUserFacade();
+    const [{ isLoginConfirmShown }, , , , , showLoginConfirm, loginConfirm] = useUserFacade();
 
-    const handleSubmit = useCallback(() => {
+    const handleSubmit = useCallback(async () => {
         const loginElement = document.getElementById('loginconfirm-email') as HTMLInputElement;
         if (loginElement && loginElement.value) {
             setEmail(loginElement.value);
-            // TODO: verify email
+            try {
+                await loginConfirm(loginElement.value);
+                showLoginConfirm(false);
+            } catch (e) {
+                window.alert(e);
+            }
         }
     }, [setEmail]);
 
@@ -21,6 +27,7 @@ const LoginConfirm: React.FC = () => {
                 <h3>Signing in with a new device?</h3>
                 <small><label htmlFor="loginconfirm-email">Confirm your email</label></small>
                 <input
+                    autoFocus
                     id="loginconfirm-email"
                     type="text"
                     placeholder="email"
@@ -37,12 +44,12 @@ const LoginConfirm: React.FC = () => {
 
     const closeLightbox = useCallback(() => {
         setEmail(null);
-        // TODO: any other cleanup
+        showLoginConfirm(false);
     }, [setEmail]);
 
-/*     if (!isLoginShown) {
+    if (!isLoginConfirmShown) {
         return null;
-    } */
+    }
 
     return (
         <Lightbox

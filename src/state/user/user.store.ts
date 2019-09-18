@@ -4,7 +4,8 @@ import { User } from './user.model';
 export interface UserState {
     user: User | null;
     ui: {
-        showLogin: boolean
+        showLogin: boolean,
+        showLoginConfirm: boolean,
     }
 }
 
@@ -12,7 +13,8 @@ export function createInitialState(): UserState {
     return {
         user: null,
         ui: {
-            showLogin: false
+            showLogin: false,
+            showLoginConfirm: false,
         }
     };
 }

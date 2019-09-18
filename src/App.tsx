@@ -18,7 +18,7 @@ const App: React.FC = () => {
             {/* <Debug /> */}
             <Admin />
             <Login />
-            {/* <LoginConfirm /> */}
+            <LoginConfirm />
             <Header />
             <div className="PollArea Container">
                 <Tabs />

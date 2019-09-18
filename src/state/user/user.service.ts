@@ -9,11 +9,23 @@ export class UserService {
     }
 
     showLogin(showLogin: boolean) {
-        this.userStore.update({
+        this.userStore.update(state => ({
+            ...state,
             ui: {
+                ...state.ui,
                 showLogin,
             }
-        });
+        }));
+    }
+
+    showLoginConfirm(showLoginConfirm: boolean) {
+        this.userStore.update(state => ({
+            ...state,
+            ui: {
+                ...state.ui,
+                showLoginConfirm,
+            }
+        }));
     }
 }
 

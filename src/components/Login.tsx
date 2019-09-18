@@ -24,6 +24,7 @@ const Login: React.FC = () => {
                 <h3>Step 1: <label htmlFor="login-email">Login with email</label></h3>
                 <small>We only send you a sign-in link, no other emails!</small>
                 <input
+                    autoFocus
                     id="login-email"
                     type="text"
                     placeholder="email"
