@@ -33,7 +33,7 @@ export async function addVote(userId: string, pollId: string, imdbId: string): P
                 }
                 return {
                     ...option,
-                    count: (option.count + 1) || 0,
+                    count: (option.count + 1) || 1,
                     hasVotedUids: (option.hasVotedUids || []).concat(userId)
                 };
             }
