@@ -8,6 +8,7 @@ import { User } from '../state/user/user.model';
 
 interface UserState {
     user: User | null;
+    isLoginShown: boolean;
 }
 
 function onEmit<T>(source$: Observable<T>, nextFn: (value: T) => void): Subscription {
@@ -23,21 +24,20 @@ function redirectHome() {
  */
 export function useUserFacade(): [
     UserState,
+    (email: string) => Promise<void>,
     Function,
-    Function,
-    <T extends (...args: any[]) => any>(func: T) => (...funcArgs: Parameters<T>) => ReturnType<T> | Promise<void>
+    <T extends (...args: any[]) => any>(func: T) => (...funcArgs: Parameters<T>) => ReturnType<T> | void,
+    (showLogin: boolean) => void
 ] {
-    const [state, setState] = useState<UserState>({ user: null });
-    const login = async () => {
+    const [state, setState] = useState<UserState>({ user: null, isLoginShown: false });
+    const login = async (email: string) => {
         const actionCodeSettings = {
             url: 'https://movie-night.club',
             handleCodeInApp: true,
         };
-        const email = window.prompt('Gimme yo email');
         if (email && email.length > 0) {
             await firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings);
             window.localStorage.setItem('emailForSignIn', email);
-            window.alert('Check yo email');
         }
     }
     const logout = () => {
@@ -46,15 +46,18 @@ export function useUserFacade(): [
         userService.setUser(null);
         redirectHome();
     }
+    const showLogin = (show: boolean) => {
+        return userService.showLogin(show);
+    }
 
     // Wrap a login-privileged function.
     // This will redirect to login if not logged in, otherwise it will call the function.
-    function wrapLogin<T extends (...args: any[]) => any>(func: T): (...funcArgs: Parameters<T>) => ReturnType<T> | Promise<void> {
-        return (...args: Parameters<T>): ReturnType<T> | Promise<void> => {
+    function wrapLogin<T extends (...args: any[]) => any>(func: T): (...funcArgs: Parameters<T>) => ReturnType<T> | void {
+        return (...args: Parameters<T>): ReturnType<T> | void => {
             if (state.user) {
                 return func(...args);
             }
-            return login();
+            return userService.showLogin(true);
         }
     }
 
@@ -62,11 +65,14 @@ export function useUserFacade(): [
      * Manage subscriptions with auto-cleanup
      */
     useEffect(() => {
-        const subscription = onEmit<User | null>(userQuery.user$, user => setState(state => ({ ...state, user })));
-        return () => subscription.unsubscribe();
+        const subscriptions = [
+            onEmit<User | null>(userQuery.user$, user => setState(state => ({ ...state, user }))),
+            onEmit<boolean>(userQuery.showLogin$, isLoginShown => setState(state => ({ ...state, isLoginShown }))),
+        ];
+        return () => subscriptions.forEach(subscription => subscription.unsubscribe());
     }, []);
 
-    return [state, login, logout, wrapLogin];
+    return [state, login, logout, wrapLogin, showLogin];
 }
 
 export function useUserSetup() {
