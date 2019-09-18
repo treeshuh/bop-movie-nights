@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
 import Lightbox from 'lightbox-react';
 import { useUserFacade } from '../hooks/user.hook';
 import '../styles/Login.scss';
