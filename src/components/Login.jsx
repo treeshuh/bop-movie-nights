@@ -8,10 +8,15 @@ function Login({
     show
 }) {
     const [submitted, setUISubmit] = useState(false);
+    const [email, setEmail] = useState(null);
     
     const handleSubmit = useCallback(() => {
         setUISubmit(true);
-    }, [setUISubmit]);
+        const loginElement = document.getElementById('login-email');
+        if (loginElement && loginElement.value) {
+            setEmail(loginElement.value);
+        }
+    }, [setUISubmit, setEmail]);
 
     const LoginContent = useMemo(() => (
         <div className="Login">
@@ -24,9 +29,15 @@ function Login({
             </div>
             <div className={submitted ? "Login-step Login-step--active" : "Login-step"}>
                 <h3>Step 2: Check your email</h3>
+                {email && <small>Email sent to <strong>{email}</strong></small>}
             </div>
         </div>
-    ), [handleSubmit, submitted]);
+    ), [handleSubmit, submitted, email]);
+
+    const closeLightbox = useCallback(() => {
+        setEmail(null);
+        setUISubmit(false);
+    }, [setEmail, setUISubmit]);
 
     if (!show) {
         return null;
@@ -35,9 +46,9 @@ function Login({
     return (
         <Lightbox
             mainSrc={LoginContent}
-            onCloseRequest={() => {}}
+            onCloseRequest={closeLightbox}
             enableZoom={false}
-            />
+        />
     )
 };
 
