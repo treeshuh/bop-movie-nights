@@ -35,7 +35,7 @@
         background-size: cover;
         background-position: center bottom;
         z-index: -1;
-        filter: brightness(0.6);
+        filter: brightness(0.4);
         animation: pulse 25s infinite alternate linear;
     }
 
@@ -86,10 +86,12 @@
 
     .Header-plot {
         margin-bottom: 5px;
+        text-shadow: 1px 1px 3px #000000a3;
     }
 
     .Header-website {
         padding-left: 5px;
+        text-shadow: 1px 1px 3px #000000a3;
         color: white;
         transition: color 200ms ease-in;
         &:hover {
@@ -100,6 +102,7 @@
     .Header-genre, .Header-rating, .Header-runtime {
         display: inline-block;
         padding: 0 15px 0 0;
+        text-shadow: 1px 1px 3px #000000a3;
     }
 
     .Header-genre {
