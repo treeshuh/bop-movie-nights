@@ -31,11 +31,11 @@ export function usePollsFacade(): [
     Function,
     Function,
     Function,
-    (title: string, order: number) => Promise<_firebase.firestore.DocumentReference> | Promise<void>,
-    (pollId: string, imdbId: string) => Promise<void>,
-    (requests: UpdatePollRequest[]) => Promise<void>,
+    (title: string, order: number) => Promise<_firebase.firestore.DocumentReference> | void,
+    (pollId: string, imdbId: string) => void,
+    (requests: UpdatePollRequest[]) => void,
 ] {
-    const [userState, login, , wrapLogin] = useUserFacade();
+    const [userState, login, , wrapLogin, showLogin] = useUserFacade();
     const [state, setState] = useState<PollsState>({
         polls: [],
         livePolls: [],
@@ -55,7 +55,7 @@ export function usePollsFacade(): [
         if (userState.user) {
             firebase.addVote(userState.user.uid, id.toString(), optionId)
         } else {
-            login();
+            showLogin(true);
         }
     };
     const voteForActiveOption = () => {

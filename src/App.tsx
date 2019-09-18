@@ -16,7 +16,7 @@ const App: React.FC = () => {
         <div className="App">
             {/* <Debug /> */}
             <Admin />
-            <Login show={false}/>
+            <Login />
             <Header />
             <div className="PollArea Container">
                 <Tabs />

@@ -19,7 +19,7 @@ const PollDetail: React.FC<PollDetailProps> = ({
 }) => {
     const [isTrailerOpen, setTrailerOpen] = useState(false);
     const [trailerUrl, setTrailerUrl] = useState(null);
-    const [userState, login, logout] = useUserFacade();
+    const [userState, login, logout, , showLogin] = useUserFacade();
     const [pollsState, setActivePoll, setActivePollOption, addPollVote, voteForActiveOption, hasVotedForActiveOption] = usePollsFacade();
 
     const openTrailer = useCallback((event) => {
@@ -68,7 +68,7 @@ const PollDetail: React.FC<PollDetailProps> = ({
                             <span className="Star" /> ({count || 0})
                         </button>
                     ) : (
-                        <button onClick={() => login()}>
+                        <button onClick={() => showLogin(true)}>
                             Login to Vote
                         </button>
                     )

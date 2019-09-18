@@ -8,13 +8,13 @@ export default () => {
     const [pollsState, setActivePoll, setActivePollOption, addPollVote, voteForActiveOption] = usePollsFacade();
     const [moviesState] = useMoviesFacade();
     const [upcomingMovie] = useUpcomingMovieFacade();
-    const [userState, login, logout] = useUserFacade();
+    const [userState, login, logout, , showLogin] = useUserFacade();
 
     return (
         <div style={{ background: '#bada55' }}>
             <div className="UserDebug">
                 <h1>User</h1>
-                <button onClick={() => login()}>Login</button>
+                <button onClick={() => showLogin(true)}>Login</button>
                 <button onClick={() => logout()}>Logout</button>
                 <pre>{JSON.stringify(userState.user, null, 2)}</pre>
             </div>

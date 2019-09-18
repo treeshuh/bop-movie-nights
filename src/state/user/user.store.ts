@@ -3,11 +3,17 @@ import { User } from './user.model';
 
 export interface UserState {
     user: User | null;
+    ui: {
+        showLogin: boolean
+    }
 }
 
 export function createInitialState(): UserState {
     return {
-        user: null
+        user: null,
+        ui: {
+            showLogin: false
+        }
     };
 }
 

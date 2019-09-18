@@ -20,7 +20,7 @@ function onEmit<T>(source$: Observable<T>, nextFn: (value: T) => void): Subscrip
 export function useMoviesFacade(): [
     MoviesState,
     Function,
-    (imdbId: string, trailerUrl: string) => Promise<void>
+    (imdbId: string, trailerUrl: string) => Promise<void> | void
 ] {
     const [state, setState] = useState<MoviesState>({ movies: [] });
     const [, , , wrapLogin] = useUserFacade();

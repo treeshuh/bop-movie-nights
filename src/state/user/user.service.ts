@@ -7,6 +7,14 @@ export class UserService {
     setUser(user: User | null) {
         this.userStore.update({ user });
     }
+
+    showLogin(showLogin: boolean) {
+        this.userStore.update({
+            ui: {
+                showLogin,
+            }
+        });
+    }
 }
 
 export const userService = new UserService(userStore);
