@@ -31,9 +31,11 @@ const Footer: React.FC = () => (
                 href="https://dribbble.com/shots/5837867-Daily-UI-025-TV-App"
                 text="Neal Hampton" />
             </small>
-            <small className="Footer-callout">Movie Night icon by <Link
+            <small className="Footer-callout">Icons by <Link
                 href="https://www.flaticon.com/free-icon/clapperboard_108884#term=clapperboard&page=1&position=2"
-                text="Freepik" />
+                text="Freepik" /> and <Link
+                href="https://fontawesome.com"
+                text="Font Awesome" />
             </small>
             <small className="Footer-callout">Made with &#x2764; by <Link
                 href="https://github.com/anakorn"
