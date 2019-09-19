@@ -1,7 +1,7 @@
 import { ID } from "@datorama/akita";
 import { PollsStore, pollsStore } from "./polls.store";
 import { PollOption, Poll } from "./poll.model";
-import { polls$, addVote } from "../../external/firebase";
+import { polls$ } from "../../external/firebase";
 import { Subscription } from "rxjs";
 
 export class PollsService {

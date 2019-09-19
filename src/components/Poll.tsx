@@ -15,7 +15,13 @@ const Poll: React.FC = () => {
         setActivePoll,
         setActivePollOption,
         addPollVote,
-        voteForActiveOption
+        voteForActiveOption,
+        ,
+        ,
+        ,
+        ,
+        ,
+        removeVoteForActiveOption
     ] = usePollsFacade();
     // TODO: remove movies facade and use updated polls facade;
     const [moviesState, getMovieById] = useMoviesFacade();
@@ -59,6 +65,7 @@ const Poll: React.FC = () => {
             <PollDetail
                 movie={currentMovie}
                 saveCallback={voteForActiveOption}
+                removeCallback={removeVoteForActiveOption}
                 count={activePollOption ? activePollOption.count : 0} />
         </div>
     )

@@ -36,7 +36,7 @@ export default () => {
                                     {option.imdbId} (Vote count: {option.count})
                                     &nbsp;
                                     <button onClick={() => 
-                                        addPollVote(pollsState.activePoll!.id, option.imdbId)
+                                        addPollVote('', pollsState.activePoll!.id.toString(), option.imdbId)
                                     }>Vote</button>
                                     <button onClick={() => 
                                         setActivePollOption(option)

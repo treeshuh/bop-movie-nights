@@ -28,12 +28,14 @@ export function usePollsFacade(): [
     PollsState,
     Function,
     Function,
-    Function,
+    (userId: string, pollId: string, imdbId: string) => Promise<void>,
     Function,
     Function,
     (title: string, order: number) => Promise<_firebase.firestore.DocumentReference> | void,
     (pollId: string, imdbId: string) => void,
     (requests: UpdatePollRequest[]) => void,
+    (userId: string, pollId: string, imdbId: string) => Promise<void>,
+    () => Promise<void>
 ] {
     const [userState, login, , wrapLogin, showLogin] = useUserFacade();
     const [state, setState] = useState<PollsState>({
@@ -58,11 +60,24 @@ export function usePollsFacade(): [
             showLogin(true);
         }
     };
+    const removePollVote = async (id: ID, optionId: string) => {
+        if (userState.user) {
+            firebase.removeVote(userState.user.uid, id.toString(), optionId)
+        } else {
+            showLogin(true);
+        }
+    };
     const voteForActiveOption = () => {
         if (!(state.activePoll && state.activePollOption)) {
             throw Error(`Cannot select poll option.`);
         }
         return addPollVote(state.activePoll.id, state.activePollOption.imdbId);
+    }
+    const removeVoteForActiveOption = () => {
+        if (!(state.activePoll && state.activePollOption)) {
+            throw Error(`Cannot select poll option.`);
+        }
+        return removePollVote(state.activePoll.id, state.activePollOption.imdbId);
     }
     const hasVotedForActiveOption = () => {
         if (state.activePollOption && state.activePollOption.hasVotedUids && userState.user) {
@@ -113,5 +128,7 @@ export function usePollsFacade(): [
         wrapLogin(firebase.createPoll),
         wrapLogin(firebase.addPollOption),
         wrapLogin(firebase.updatePolls),
+        removePollVote,
+        removeVoteForActiveOption,
     ];
 }

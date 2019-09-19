@@ -8,19 +8,32 @@ import { usePollsFacade } from '../hooks/polls.hook';
 interface PollDetailProps {
     movie: Movie | null,
     saveCallback: Function,
+    removeCallback: Function,
     count: number
 }
 
 const PollDetail: React.FC<PollDetailProps> = ({
     movie,
     saveCallback,
+    removeCallback,
     count,
 
 }) => {
     const [isTrailerOpen, setTrailerOpen] = useState(false);
     const [trailerUrl, setTrailerUrl] = useState(null);
     const [userState, login, logout, , showLogin] = useUserFacade();
-    const [pollsState, setActivePoll, setActivePollOption, addPollVote, voteForActiveOption, hasVotedForActiveOption] = usePollsFacade();
+    const [
+        pollsState,
+        setActivePoll,
+        setActivePollOption,
+        addPollVote,
+        voteForActiveOption,
+        hasVotedForActiveOption,
+        ,
+        ,
+        ,
+        removePollVote
+    ] = usePollsFacade();
 
     const openTrailer = useCallback((event) => {
         const { url } = event.target.dataset;
@@ -37,6 +50,11 @@ const PollDetail: React.FC<PollDetailProps> = ({
         event.preventDefault();
         saveCallback();
     }, [saveCallback]);
+
+    const handleRemove = useCallback((event) => {
+        event.preventDefault();
+        removeCallback();
+    }, [removeCallback]);
 
     if (!movie) {
         return null;
@@ -61,8 +79,7 @@ const PollDetail: React.FC<PollDetailProps> = ({
                 {userState.user
                     ? (
                         <button
-                            onClick={handleSave}
-                            disabled={hasVotedForActiveOption()}
+                            onClick={hasVotedForActiveOption() ? handleRemove : handleSave}
                             className={`${hasVotedForActiveOption() ? 'active' : ''}`}
                         >
                             <i className="fas fa-star" style={{ marginRight: 4 }} />
