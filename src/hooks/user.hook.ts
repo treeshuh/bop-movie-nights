@@ -35,7 +35,7 @@ export function useUserFacade(): [
     const [state, setState] = useState<UserState>({ user: null, isLoginShown: false, isLoginConfirmShown: false });
     const login = async (email: string) => {
         const actionCodeSettings = {
-            url: 'http://localhost:3000',
+            url: 'https://movie-night.club',
             handleCodeInApp: true,
         };
         if (email && email.length > 0) {
