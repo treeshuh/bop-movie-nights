@@ -1,7 +1,7 @@
 import { ID } from '@datorama/akita';
 
 export interface Poll {
-    id: ID;
+    id: string;
     title: string;
     options: PollOption[];
     archived: boolean;
@@ -13,3 +13,6 @@ export interface PollOption {
     count: number;
     hasVotedUids: string[];
 }
+
+export type PollOptionOrder = string[];
+export type PollOptionOrderMap = Record<string, PollOptionOrder>;

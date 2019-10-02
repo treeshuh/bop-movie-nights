@@ -1,15 +1,16 @@
 import { EntityState, ActiveState, StoreConfig, EntityStore } from '@datorama/akita';
-import { Poll, PollOption } from './poll.model';
+import { Poll, PollOption, PollOptionOrder, PollOptionOrderMap } from './poll.model';
 
 export interface PollsState extends EntityState<Poll>, ActiveState {
     ui: {
-        activePollOption: PollOption | null
+        activePollOption: PollOption | null,
+        pollOptionOrderMap: PollOptionOrderMap
     }
 };
 
 const initialState: PollsState = {
     active: null,
-    ui: { activePollOption: null }
+    ui: { activePollOption: null, pollOptionOrderMap: {} }
 };
 
 @StoreConfig({ name: 'polls' })
@@ -19,7 +20,29 @@ export class PollsStore extends EntityStore<PollsState> {
     }
 
     setActiveOption(option: PollOption | null) {
-        this.update({ ui: { activePollOption: option }});
+        this.update(state => ({
+            ...state,
+            ui: {
+                ...state.ui,
+                activePollOption: option
+            }
+        }));
+    }
+
+    setPollOptionOrder(id: string, order: PollOptionOrder) {
+        console.log(`setting poll option order`)
+        console.log(id)
+        console.log(order)
+        this.update(state => ({
+            ...state,
+            ui: {
+                ...state.ui,
+                pollOptionOrderMap: {
+                    ...state.ui.pollOptionOrderMap,
+                    [id]: order
+                }
+            }
+        }));
     }
 }
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Observable, Subscription } from 'rxjs';
 import { pollsService } from '../state/polls/polls.service';
 import { pollsQuery } from '../state/polls/polls.query';
-import { Poll, PollOption } from '../state/polls/poll.model';
+import { Poll, PollOption, PollOptionOrderMap, PollOptionOrder } from '../state/polls/poll.model';
 import { ID } from '@datorama/akita';
 import { first } from 'rxjs/operators';
 import { useUserFacade } from './user.hook';
@@ -15,6 +15,7 @@ interface PollsState {
     livePolls: Poll[];
     activePoll: Poll | null;
     activePollOption: PollOption | null;
+    pollOptionOrderMap: PollOptionOrderMap;
 }
 
 function onEmit<T>(source$: Observable<T>, nextFn: (value: T) => void): Subscription {
@@ -35,14 +36,16 @@ export function usePollsFacade(): [
     (pollId: string, imdbId: string) => void,
     (requests: UpdatePollRequest[]) => void,
     (userId: string, pollId: string, imdbId: string) => Promise<void>,
-    () => Promise<void>
+    () => Promise<void>,
+    (id: string, order: PollOptionOrder) => void
 ] {
     const [userState, login, , wrapLogin, showLogin] = useUserFacade();
     const [state, setState] = useState<PollsState>({
         polls: [],
         livePolls: [],
         activePoll: null,
-        activePollOption: null
+        activePollOption: null,
+        pollOptionOrderMap: {}
     });
     const setActive = (id: ID) => {
         pollsService.setActive(id);
@@ -100,6 +103,7 @@ export function usePollsFacade(): [
             })),
             onEmit<Poll>(pollsQuery.active$, poll => setState(state => ({ ...state, activePoll: poll }))),
             onEmit<PollOption | null>(pollsQuery.activeOption$, pollOption => setState(state => ({ ...state, activePollOption: pollOption }))),
+            onEmit<PollOptionOrderMap | null>(pollsQuery.pollOptionOrderMap$, pollOptionOrderMap => setState(state => ({ ...state, pollOptionOrderMap: pollOptionOrderMap || {} }))),
         ];
 
         // Set first available poll to be active
@@ -115,6 +119,7 @@ export function usePollsFacade(): [
         );
 
         pollsService.load();
+        pollsService.loadPollOptionOrder();
         return () => { subscriptions.forEach(subscription => subscription.unsubscribe()); }
     }, []);
 
@@ -130,5 +135,6 @@ export function usePollsFacade(): [
         wrapLogin(firebase.updatePolls),
         removePollVote,
         removeVoteForActiveOption,
+        pollsService.setPollOptionOrder,
     ];
 }

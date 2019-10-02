@@ -5,12 +5,14 @@ import '../styles/Poll.scss';
 import { usePollsFacade } from '../hooks/polls.hook';
 import { useMoviesFacade } from '../hooks/movies.hook';
 import { Movie } from '../state/movies/movie.model';
+import { PollOption } from '../state/polls/poll.model';
 
 const Poll: React.FC = () => {
     const [
         {
             activePoll,
-            activePollOption
+            activePollOption,
+            pollOptionOrderMap
         },
         setActivePoll,
         setActivePollOption,
@@ -25,8 +27,12 @@ const Poll: React.FC = () => {
     ] = usePollsFacade();
     // TODO: remove movies facade and use updated polls facade;
     const [moviesState, getMovieById] = useMoviesFacade();
+    const activePollOptions = activePoll && pollOptionOrderMap[activePoll.id]
+        ? pollOptionOrderMap[activePoll.id]
+            .map(imdbId => activePoll.options.find(option => option.imdbId === imdbId) as PollOption)
+        : [];
 
-    const imgs = useMemo(() => activePoll && activePoll.options
+    const imgs = useMemo(() => activePollOptions
         .filter(option => getMovieById(option.imdbId) !== undefined)
         .map(option => {
             const movie: Movie = getMovieById(option.imdbId);
@@ -35,7 +41,7 @@ const Poll: React.FC = () => {
                 alt: movie.title
             });
         })
-    , [activePoll, getMovieById]);
+    , [activePollOptions, getMovieById]);
 
     const currentMovie = useMemo(() => activePollOption
         && getMovieById(activePollOption.imdbId)
@@ -45,14 +51,14 @@ const Poll: React.FC = () => {
         if (!activePoll || !activePollOption) {
             return;
         }
-        return activePoll.options.findIndex(o => o.imdbId === activePollOption.imdbId);
+        return activePollOptions.findIndex(o => o.imdbId === activePollOption.imdbId);
     }, [activePoll, activePollOption]);
 
     const activeCallback = useCallback((index) => {
         if (!activePoll) {
             return;
         }
-        return setActivePollOption(activePoll.options[index]);
+        return setActivePollOption(activePollOptions[index]);
     }, [activePoll, setActivePollOption]);
 
     if (!(activePoll)) {

@@ -16,7 +16,7 @@ export type UpcomingMovie = {
 };
 
 export type Poll = {
-    id: ID;
+    id: string;
     title: string;
     options: PollOption[];
     archived: boolean;
