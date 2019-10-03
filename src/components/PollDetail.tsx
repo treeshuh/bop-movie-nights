@@ -87,7 +87,8 @@ const PollDetail: React.FC<PollDetailProps> = ({
                         </button>
                     ) : (
                         <button className="primary" onClick={() => showLogin(true)}>
-                            Login to Vote
+                            <span style={{ marginRight: 4 }}>Login to Vote</span>
+                            <span>({count || 0})</span>
                         </button>
                     )
                 }
